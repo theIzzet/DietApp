@@ -1,0 +1,60 @@
+﻿@model DiyetisyenRegisterViewModel;
+<div class="row">
+	<h1>Kayıt Sayfası</h1>
+	<p>Diyetisyen olarak hizmet vermek için Diyetisyenlik bölümünden mezun olduğunuz üniversitenin mezuniyet belgesini ve Transkript belgenizi eklemelisiniz.</p>
+	<form asp-action="DiyetisyenRegister" method="post" enctype="multipart/form-data">
+		@* <div asp-validation-summary="All" class="text-danger"></div> *@
+		<div class="mb-3">
+			<label asp-for="Name" class="form-label"></label>
+			<input class="form-control" asp-for="Name" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="SurName" class="form-label"></label>
+			<input class="form-control" asp-for="SurName" />
+			<span asp-validation-for="SurName" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Username" class="form-label"></label>
+			<input class="form-control" asp-for="Username" />
+			<span asp-validation-for="Username" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Email" class="form-label"></label>
+			<input class="form-control" asp-for="Email" />
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="PhoneNumber" class="form-label"></label>
+			<input class="form-control" asp-for="PhoneNumber" />
+			<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="GraduationCertificate" class="form-label"></label>
+			<input type="file" class="form-control" asp-for="GraduationCertificate" />
+			<span asp-validation-for="GraduationCertificate" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="Transkript" class="form-label"></label>
+			<input type="file" class="form-control" asp-for="Transkript" />
+			<span asp-validation-for="Transkript" class="text-danger"></span>
+		</div>
+
+
+		<div class="mb-3">
+			<label asp-for="Password" class="form-label"></label>
+			<input class="form-control" asp-for="Password" />
+			<span asp-validation-for="Password" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="ConfirmPassword" class="form-label"></label>
+			<input class="form-control" asp-for="ConfirmPassword" />
+			<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+		</div>
+		<button type="submit" class="btn btn-success">Gönder</button>
+	</form>
+</div>
