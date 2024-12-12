@@ -25,6 +25,15 @@ builder.Services.AddIdentity<DietUser, DietRole>()
 
 
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Login/Login";
+    options.AccessDeniedPath = "/Login/Login";
+    options.SlidingExpiration=true;
+    options.ExpireTimeSpan=TimeSpan.FromDays(14);
+});
+
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

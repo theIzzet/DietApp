@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using DietApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DietApp.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,7 +19,7 @@ namespace DietApp.Controllers
         {
             return View();
         }
-
+        
         public IActionResult Privacy()
         {
             return View();
