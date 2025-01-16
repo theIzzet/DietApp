@@ -43,10 +43,23 @@ namespace DietApp.Controllers
 
                     if (result.Succeeded)
                     {
+                        // Kullanıcı rollerini al
+                        var roles = await _userManager.GetRolesAsync(user);
+
+
                         //await _userManager.ResetAccessFailedCountAsync(user);
                         //await _userManager.SetLockoutEndDateAsync(user,null);
 
-                        return RedirectToAction("Index", "Home");
+                        if (roles.Contains("Hasta"))
+                        {
+                            // Hasta sayfasına yönlendir
+                            return RedirectToAction("HastaPage", "Home", new { userId = user.Id });
+                        }
+                        else if (roles.Contains("Diyetisyen"))
+                        {
+                            // Diyetisyen sayfasına yönlendir
+                            return RedirectToAction("DiyetisyenPage", "Home", new { userId = user.Id });
+                        }
                     }
                     else
                     {

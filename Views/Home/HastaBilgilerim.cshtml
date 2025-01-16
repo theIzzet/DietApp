@@ -1,0 +1,186 @@
+﻿@* @model DietApp.Entities.HastaBilgilerim
+
+
+@{
+    Layout = "~/Views/Shared/_HastaLayout.cshtml";
+}
+
+<h1>Bilgilerim</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<form asp-action="HastaBilgilerim" method="post" class="form-horizontal">
+    <!-- Kişisel Bilgiler -->
+    <h2>Kişisel Bilgiler</h2>
+
+    <div class="form-group">
+        <label for="KisiselBilgiler.DogumTarihi">Doğum Tarihi</label>
+        <input type="date" name="KisiselBilgiler.DogumTarihi"
+            value="@Model.KisiselBilgiler.DogumTarihi.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="KisiselBilgiler.Boy">Boy (cm)</label>
+        <input type="number" name="KisiselBilgiler.Boy" value="@Model.KisiselBilgiler.Boy" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="KisiselBilgiler.Kilo">Kilo (kg)</label>
+        <input type="number" name="KisiselBilgiler.Kilo" value="@Model.KisiselBilgiler.Kilo" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="KisiselBilgiler.IletisimBilgileri">İletişim Bilgileri (Telefon/E-posta)</label>
+        <input type="text" name="KisiselBilgiler.IletisimBilgileri" value="@Model.KisiselBilgiler.IletisimBilgileri"
+            class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="KisiselBilgiler.Meslek">Meslek</label>
+        <input type="text" name="KisiselBilgiler.Meslek" value="@Model.KisiselBilgiler.Meslek" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="KisiselBilgiler.CocukSayisi">Çocuk Sayısı</label>
+        <input type="number" name="KisiselBilgiler.CocukSayisi" value="@Model.KisiselBilgiler.CocukSayisi"
+            class="form-control" />
+    </div>
+
+    <!-- Tıbbi Geçmiş -->
+    <h2>Tıbbi Geçmiş</h2>
+    <div class="form-group">
+        <label for="TibbiGecmis.Hastaliklar">Hastalıklar</label>
+        <textarea name="TibbiGecmis.Hastaliklar" class="form-control">@Model.TibbiGecmis.Hastaliklar</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="TibbiGecmis.Alerjiler">Alerjiler</label>
+        <textarea name="TibbiGecmis.Alerjiler" class="form-control">@Model.TibbiGecmis.Alerjiler</textarea>
+    </div>
+
+    <!-- Beslenme Alışkanlıkları -->
+    <h2>Beslenme Alışkanlıkları</h2>
+    <div class="form-group">
+        <label for="BeslenmeAliskanliklari.GunlukOgunSayisi">Günlük Öğün Sayısı</label>
+        <input type="number" name="BeslenmeAliskanliklari.GunlukOgunSayisi"
+            value="@Model.BeslenmeAliskanliklari.GunlukOgunSayisi" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="BeslenmeAliskanliklari.OgunZamanlari">Öğün Zamanları</label>
+        <input type="text" name="BeslenmeAliskanliklari.OgunZamanlari"
+            value="@Model.BeslenmeAliskanliklari.OgunZamanlari" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="BeslenmeAliskanliklari.TuketilenBesinler">Tüketilen Besinler</label>
+        <textarea name="BeslenmeAliskanliklari.TuketilenBesinler"
+            class="form-control">@Model.BeslenmeAliskanliklari.TuketilenBesinler</textarea>
+    </div>
+
+    <!-- Fiziksel Aktivite Durumu -->
+    <h2>Fiziksel Aktivite Durumu</h2>
+    <div class="form-group">
+        <label for="FizikselAktiviteDurumu.DuzenliFizikselAktivite">Düzenli Fiziksel Aktivite</label>
+        <textarea name="FizikselAktiviteDurumu.DuzenliFizikselAktivite"
+            class="form-control">@Model.FizikselAktiviteDurumu.DuzenliFizikselAktivite</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="YasamTarzi.SigaraKullanimi">Sigara Kullanımı</label>
+        <input type="text" name="YasamTarzi.SigaraKullanimi" value="@Model.YasamTarzi.SigaraKullanimi"
+            class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="YasamTarzi.AlkolTuketimi">Alkol Tüketimi</label>
+        <input type="text" name="YasamTarzi.AlkolTuketimi" value="@Model.YasamTarzi.AlkolTuketimi"
+            class="form-control" />
+    </div>
+
+    <!-- Hedefler -->
+    <h2>Hedefler</h2>
+    <div class="form-group">
+        <label for="Hedefler.KiloHedefi">Kilo Hedefi</label>
+        <input type="text" name="Hedefler.KiloHedefi" value="@Model.Hedefler.KiloHedefi" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Hedefler.SaglikSorunlariYonetimi">Sağlık Sorunları Yönetimi</label>
+        <input type="text" name="Hedefler.SaglikSorunlariYonetimi" value="@Model.Hedefler.SaglikSorunlariYonetimi"
+            class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Hedefler.SporPerformansiHedefleri">Spor Performansı Hedefleri</label>
+        <input type="text" name="Hedefler.SporPerformansiHedefleri" value="@Model.Hedefler.SporPerformansiHedefleri"
+            class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
+</form> *@
+
+
+
+@model DietApp.Entities.HastaBilgilerim
+
+@{
+    ViewData["Title"] = "Hasta Bilgilerim";
+}
+
+<h2>Hasta Bilgilerim</h2>
+
+<form asp-action="HastaBilgilerim" method="post">
+    <fieldset>
+        <legend>Kişisel Bilgiler</legend>
+        <label for="AdSoyad">Ad Soyad:</label>
+        <input type="text" id="AdSoyad" name="KisiselBilgiler.AdSoyad" value="@Model.KisiselBilgiler.AdSoyad" />
+
+        <label for="DogumTarihi">Doğum Tarihi:</label>
+        <input type="date" id="DogumTarihi" name="KisiselBilgiler.DogumTarihi" value="@Model.KisiselBilgiler.DogumTarihi.ToString("yyyy-MM-dd")" />
+
+        <label for="Cinsiyet">Cinsiyet:</label>
+        <select id="Cinsiyet" name="KisiselBilgiler.Cinsiyet" class="form-control">
+            <option value="Erkek" selected="@Model.KisiselBilgiler.Cinsiyet == " Erkek"">Erkek</option>
+            <option value="Kadın" selected="@Model.KisiselBilgiler.Cinsiyet == " Kadın"">Kadın</option>
+        </select>
+
+
+        <!-- Diğer alanlar -->
+    </fieldset>
+
+    <fieldset>
+        <legend>Tıbbi Geçmiş</legend>
+        <label for="Hastaliklar">Hastalıklar:</label>
+        <textarea id="Hastaliklar" name="TibbiGecmis.Hastaliklar">@Model.TibbiGecmis.Hastaliklar</textarea>
+
+        <label for="AileHastaliklari">Aile Hastalıkları:</label>
+        <textarea id="AileHastaliklari" name="TibbiGecmis.AileHastaliklari">@Model.TibbiGecmis.AileHastaliklari</textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>Beslenme Alışkanlıkları</legend>
+        <label for="GunlukOgunSayisi">Günlük Öğün Sayısı:</label>
+        <input type="number" id="GunlukOgunSayisi" name="BeslenmeAliskanliklari.GunlukOgunSayisi" value="@Model.BeslenmeAliskanliklari.GunlukOgunSayisi" />
+    </fieldset>
+
+    <fieldset>
+        <legend>Fiziksel Aktivite Durumu</legend>
+        <label for="DuzenliFizikselAktivite">Düzenli Fiziksel Aktivite:</label>
+        <input type="text" id="DuzenliFizikselAktivite" name="FizikselAktiviteDurumu.DuzenliFizikselAktivite" value="@Model.FizikselAktiviteDurumu.DuzenliFizikselAktivite" />
+    </fieldset>
+
+    <fieldset>
+        <legend>Yaşam Tarzı</legend>
+        <label for="StresDuzeyi">Stres Düzeyi:</label>
+        <input type="text" id="StresDuzeyi" name="YasamTarzi.StresDuzeyi" value="@Model.YasamTarzi.StresDuzeyi" />
+    </fieldset>
+
+  
+
+    <button type="submit">Kaydet</button>
+</form>
+
+@if (TempData["Message"] != null)
+{
+    <p>@TempData["Message"]</p>
+}
+<
