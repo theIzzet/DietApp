@@ -3,6 +3,7 @@ using System;
 using DietApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietApp.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20250125185806_UpAspNetUsersMig")]
+    partial class UpAspNetUsersMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -166,7 +169,7 @@ namespace DietApp.Migrations.Identity
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("EatingHabits");
+                    b.ToTable("EatingHabit");
                 });
 
             modelBuilder.Entity("DietApp.Entities.Goal", b =>
@@ -196,7 +199,7 @@ namespace DietApp.Migrations.Identity
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Goals");
+                    b.ToTable("Goal");
                 });
 
             modelBuilder.Entity("DietApp.Entities.Lifestyle", b =>
@@ -235,7 +238,7 @@ namespace DietApp.Migrations.Identity
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Lifestyles");
+                    b.ToTable("Lifestyle");
                 });
 
             modelBuilder.Entity("DietApp.Entities.PastMedical", b =>
@@ -265,7 +268,7 @@ namespace DietApp.Migrations.Identity
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("PastMedicals");
+                    b.ToTable("PastMedical");
                 });
 
             modelBuilder.Entity("DietApp.Entities.PersonalInfo", b =>
@@ -313,7 +316,7 @@ namespace DietApp.Migrations.Identity
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("PersonalInfos");
+                    b.ToTable("PersonalInfo");
                 });
 
             modelBuilder.Entity("DietApp.Entities.PhysicalActivityStatus", b =>

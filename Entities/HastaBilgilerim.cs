@@ -4,11 +4,19 @@ namespace DietApp.Entities
 {
     public class HastaBilgilerim
     {
-        public KisiselBilgiler KisiselBilgiler { get; set; }
-        public TibbiGecmis TibbiGecmis { get; set; }
-        public BeslenmeAliskanliklari BeslenmeAliskanliklari { get; set; }
-        public FizikselAktiviteDurumu FizikselAktiviteDurumu { get; set; }
-        public YasamTarzi YasamTarzi { get; set; }
-        public Hedefler Hedefler { get; set; }
+        public PersonalInfo? KisiselBilgiler { get; set; } 
+        
+        public EatingHabit? BeslenmeAliskanliklari { get; set; } 
+        public PhysicalActivityStatus? FizikselAktiviteDurumu { get; set; }  
+        public Lifestyle? YasamTarzi { get; set; } 
+        public Goal? Hedefler { get; set; } 
+
+        public Allergy? Allergy { get; set; } 
+
+        public Disease? Disease { get; set; }  
+        public FamilyDisease? FamilyDisease { get; set;} 
+        public Medication? Medication { get; set; } 
+
+        public PastMedical? TibbiGecmis { get; set; }
     }
 }
