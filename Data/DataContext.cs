@@ -9,11 +9,23 @@ namespace DietApp.Data
         {
 
         }
-        public DbSet<KisiselBilgiler> KisiselBilgiler { get; set; }
-        public DbSet<TibbiGecmis> TibbiGecmis { get; set; }
-        public DbSet<BeslenmeAliskanliklari> BeslenmeAliskanliklari { get; set; }
-        public DbSet<FizikselAktiviteDurumu> FizikselAktiviteDurumu { get; set; }
-        public DbSet<YasamTarzi> YasamTarzi { get; set; }
-        public DbSet<Hedefler> Hedefler { get; set; }
+
+
+        //public DbSet<Allergy> Allergies  =>Set<Allergy>();
+        //public DbSet<Disease> Diseases  =>Set<Disease>();
+        //public DbSet<FamilyDisease> FamilyDiseases  =>Set<FamilyDisease>();
+        //public DbSet<Medication> Medications  =>Set<Medication>();   
+
+        //public DbSet<PersonalInfo> PersonalInfos => Set<PersonalInfo>();
+        //public DbSet<PastMedical> PastMedicals => Set<PastMedical>();
+        //public DbSet<EatingHabit> EatingHabits => Set<EatingHabit>();
+        //public DbSet<PhysicalActivityStatus> PhysicalActivityStatus => Set<PhysicalActivityStatus>();
+        //public DbSet<Lifestyle> Lifestyles => Set<Lifestyle>();
+        //public DbSet<Goal> Goals => Set<Goal>();
+
+
+  
+
+
     }
 }

@@ -119,7 +119,7 @@
 </form> *@
 
 
-
+@* 
 @model DietApp.Entities.HastaBilgilerim
 
 @{
@@ -166,7 +166,7 @@
         <legend>Fiziksel Aktivite Durumu</legend>
         <label for="DuzenliFizikselAktivite">Düzenli Fiziksel Aktivite:</label>
         <input type="text" id="DuzenliFizikselAktivite" name="FizikselAktiviteDurumu.DuzenliFizikselAktivite" value="@Model.FizikselAktiviteDurumu.DuzenliFizikselAktivite" />
-    </fieldset>
+    </fieldset>   
 
     <fieldset>
         <legend>Yaşam Tarzı</legend>
@@ -183,4 +183,4 @@
 {
     <p>@TempData["Message"]</p>
 }
-<
+< *@

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DietApp.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DietApp.Data
@@ -9,5 +10,12 @@ namespace DietApp.Data
         {
 
         }
+        public DbSet<PersonalInfo> PersonalInfos => Set<PersonalInfo>();
+        public DbSet<PastMedical> PastMedicals => Set<PastMedical>();
+        public DbSet<EatingHabit> EatingHabits => Set<EatingHabit>();
+        public DbSet<PhysicalActivityStatus> PhysicalActivityStatus => Set<PhysicalActivityStatus>();
+        public DbSet<Lifestyle> Lifestyles => Set<Lifestyle>();
+        public DbSet<Goal> Goals => Set<Goal>();
+
     }
 }

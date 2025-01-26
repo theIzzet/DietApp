@@ -15,10 +15,10 @@ namespace DietApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<DietUser> _userManager;
-        private readonly DataContext _dataContext;
+        private readonly IdentityContext _dataContext;
 
 
-        public HomeController(ILogger<HomeController> logger, UserManager<DietUser> userManager, DataContext dataContext)
+        public HomeController(ILogger<HomeController> logger, UserManager<DietUser> userManager, IdentityContext dataContext)
         {
             _logger = logger;
             _userManager = userManager;
@@ -42,7 +42,7 @@ namespace DietApp.Controllers
         }
 
         // Hasta Page
-        [Authorize(Roles = "Hasta")]
+        //[Authorize(Roles = "Hasta")]
         public async Task<IActionResult> HastaPage()
         {
             // Oturumdaki kullanıcı ID'sini al
@@ -76,12 +76,12 @@ namespace DietApp.Controllers
             // Kullanıcı bilgilerini getir (veya boş modeller oluştur)
             var model = new HastaBilgilerim
             {
-                KisiselBilgiler = await _dataContext.KisiselBilgiler.FirstOrDefaultAsync(k => k.KullaniciId == userId) ?? new KisiselBilgiler(),
-                TibbiGecmis = await _dataContext.TibbiGecmis.FirstOrDefaultAsync(t => t.KullaniciId == userId) ?? new TibbiGecmis(),
-                BeslenmeAliskanliklari = await _dataContext.BeslenmeAliskanliklari.FirstOrDefaultAsync(b => b.KullaniciId == userId) ?? new BeslenmeAliskanliklari(),
-                FizikselAktiviteDurumu = await _dataContext.FizikselAktiviteDurumu.FirstOrDefaultAsync(f => f.KullaniciId == userId) ?? new FizikselAktiviteDurumu(),
-                YasamTarzi = await _dataContext.YasamTarzi.FirstOrDefaultAsync(y => y.KullaniciId == userId) ?? new YasamTarzi(),
-                Hedefler = await _dataContext.Hedefler.FirstOrDefaultAsync(h => h.KullaniciId == userId) ?? new Hedefler()
+                KisiselBilgiler = await _dataContext.PersonalInfos.FirstOrDefaultAsync(k => k.UserId == userId) ?? new PersonalInfo(),
+                TibbiGecmis = await _dataContext.PastMedicals.FirstOrDefaultAsync(t => t.UserId == userId) ?? new PastMedical(),
+                BeslenmeAliskanliklari = await _dataContext.EatingHabits.FirstOrDefaultAsync(b => b.UserId == userId) ?? new EatingHabit(),
+                FizikselAktiviteDurumu = await _dataContext.PhysicalActivityStatus.FirstOrDefaultAsync(f => f.UserId == userId) ?? new PhysicalActivityStatus(),
+                YasamTarzi = await _dataContext.Lifestyles.FirstOrDefaultAsync(y => y.UserId == userId) ?? new Lifestyle(),
+                Hedefler = await _dataContext.Goals.FirstOrDefaultAsync(h => h.UserId == userId) ?? new Goal()
             };
 
             return View(model);
@@ -104,20 +104,20 @@ namespace DietApp.Controllers
             }
 
             // Kullanıcı ID'sini ekle
-            model.KisiselBilgiler.KullaniciId = userId;
-            model.TibbiGecmis.KullaniciId = userId;
-            model.BeslenmeAliskanliklari.KullaniciId = userId;
-            model.FizikselAktiviteDurumu.KullaniciId = userId;
-            model.YasamTarzi.KullaniciId = userId;
-            model.Hedefler.KullaniciId = userId;
+            model.KisiselBilgiler.UserId = userId;
+            model.TibbiGecmis.UserId = userId;
+            model.BeslenmeAliskanliklari.UserId = userId;
+            model.FizikselAktiviteDurumu.UserId = userId;
+            model.YasamTarzi.UserId = userId;
+            model.Hedefler.UserId = userId;
 
             // Her tablo için güncelleme veya ekleme işlemi
-            await UpsertRecord(_dataContext.KisiselBilgiler, model.KisiselBilgiler);
-            await UpsertRecord(_dataContext.TibbiGecmis, model.TibbiGecmis);
-            await UpsertRecord(_dataContext.BeslenmeAliskanliklari, model.BeslenmeAliskanliklari);
-            await UpsertRecord(_dataContext.FizikselAktiviteDurumu, model.FizikselAktiviteDurumu);
-            await UpsertRecord(_dataContext.YasamTarzi, model.YasamTarzi);
-            await UpsertRecord(_dataContext.Hedefler, model.Hedefler);
+            await UpsertRecord(_dataContext.PersonalInfos, model.KisiselBilgiler);
+            await UpsertRecord(_dataContext.PastMedicals, model.TibbiGecmis);
+            await UpsertRecord(_dataContext.EatingHabits, model.BeslenmeAliskanliklari);
+            await UpsertRecord(_dataContext.PhysicalActivityStatus, model.FizikselAktiviteDurumu);
+            await UpsertRecord(_dataContext.Lifestyles, model.YasamTarzi);
+            await UpsertRecord(_dataContext.Goals, model.Hedefler);
 
             await _dataContext.SaveChangesAsync();
 

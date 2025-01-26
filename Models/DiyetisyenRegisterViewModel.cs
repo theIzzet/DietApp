@@ -26,8 +26,10 @@ namespace DietApp.Models
         [Compare(nameof(Password), ErrorMessage = "Şifreler eşleşmiyor.Lütfen belirlediğiniz şifrenin aynısını giriniz")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
+        [Required]
+        public IFormFile GraduationCertificate { get; set; }
 
-        public IFormFile GraduationCertificate { get; set; } 
-        public IFormFile Transkript { get; set; }
+        [Required]
+        public IFormFile Transkript { get; set; } 
     }
 }

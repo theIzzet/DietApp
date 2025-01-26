@@ -1,0 +1,312 @@
+﻿@model PatientInfoViewModel
+
+<div class="row">
+    <h1>Bilgi Giriş Sayfası</h1>
+
+    <form asp-action="PatientInfos" asp-controller="PatientInfo" method="post">
+        
+        <!-- Kişisel Bilgiler Bölümü -->
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Kişisel Bilgiler</legend>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Name" class="form-label">İsim</label>
+                    <input class="form-control" asp-for="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="SurName" class="form-label">Soy İsim</label>
+                    <input class="form-control" asp-for="SurName">
+                    <span asp-validation-for="SurName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="DateOfBirth" class="form-label">Doğum Tarihi</label>
+                    <input asp-for="DateOfBirth" class="form-control" type="date">
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Gender" class="form-label">Cinsiyet</label>
+                    <select asp-for="Gender" class="form-select">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="Height"></label>
+					<input asp-for="Height" class="form-control" />
+					<span asp-validation-for="Height" class="text-danger"></span>
+				</div>
+				<div class="col-md-6 mb-3">
+					<label asp-for="Weight"></label>
+					<input asp-for="Weight" class="form-control" type="number" step="0.01" />
+					<span asp-validation-for="Weight" class="text-danger"></span>
+				</div>
+				<div class="col-md-6 mb-3">
+					<label asp-for="ContactInformation"></label>
+					<textarea asp-for="ContactInformation" class="form-control"></textarea>
+					<span asp-validation-for="ContactInformation" class="text-danger"></span>
+				</div>
+				<div class="col-md-6 mb-3">
+					<label asp-for="Occupation"></label>
+					<input asp-for="Occupation" class="form-control" />
+					<span asp-validation-for="Occupation" class="text-danger"></span>
+				</div>
+				<div class="col-md-6 mb-3">
+					<label asp-for="MaritalStatus"> Medeni Durum</label>
+					<select asp-for="MaritalStatus" class="form-select ">
+						<option value="">Select Marital Status</option>
+						<option value="Single">Single</option>
+						<option value="Married">Married</option>
+						<option value="Divorced">Divorced</option>
+					</select>
+					<span asp-validation-for="MaritalStatus" class="text-danger"></span>
+				</div>
+				<div class=" col-md-6 mb-3">
+					<label asp-for="NumberOfChildren"></label>
+					<input asp-for="NumberOfChildren" class="form-control" />
+					<span asp-validation-for="NumberOfChildren" class="text-danger"></span>
+				</div>
+
+            </div>
+        </fieldset>
+
+
+			@* Fiziksel Aktivite *@
+
+
+		<fieldset>
+			<legend class="w-auto px-2">Fiziksel Aktivite </legend>
+			<div class="row">
+				<div class=" mb-3">
+					<label asp-for="RegularPhysicalActivity"></label>
+					<textarea asp-for="RegularPhysicalActivity" class="form-control"></textarea>
+					<span asp-validation-for="RegularPhysicalActivity" class="text-danger"></span>
+				</div>
+
+				<div class=" mb-3">
+					<label asp-for="DailyInactivity"></label>
+					<textarea asp-for="DailyInactivity" class="form-control"></textarea>
+					<span asp-validation-for="DailyInactivity" class="text-danger"></span>
+				</div>
+
+				<div class=" mb-3">
+					<label asp-for="SleepPattern"></label>
+					<textarea asp-for="SleepPattern" class="form-control"></textarea>
+					<span asp-validation-for="SleepPattern" class="text-danger"></span>
+				</div>
+			</div>
+			
+		</fieldset>
+
+        <!-- Yaşam Tarzı Bölümü -->
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Yaşam Tarzı</legend>
+            <div class="row">
+				<div class="col-md-6 mb-3">
+					<label asp-for="StressLevel"></label>
+					<textarea asp-for="StressLevel" class="form-control"></textarea>
+					<span asp-validation-for="StressLevel" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="NumberOfSmokingPackage">Smoking Habits</label>
+					<select asp-for="NumberOfSmokingPackage" class="form-select">
+						<option value="">Select smoking habits...</option>
+						<option value="None">None</option>
+						<option value="1 Pack per day">1 Pack per day</option>
+						<option value="2 Packs per day">2 Packs per day</option>
+						<option value="1-2 Packs per day">1-2 Packs per day</option>
+						<option value="More than 2 Packs">More than 2 Packs</option>
+						<option value="Less than 1 Pack">Less than 1 Pack</option>
+						<option value="Rarely">Rarely</option>
+					</select>
+					<span asp-validation-for="NumberOfSmokingPackage" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="SmokingUtilezeYear">Smoking Utilization Year</label>
+					<input asp-for="SmokingUtilezeYear" class="form-control" placeholder="Enter number of years..." />
+					<span asp-validation-for="SmokingUtilezeYear" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="AlcoholConsumption">Alcohol Consumption</label>
+					<select asp-for="AlcoholConsumption" class="form-select">
+						<option value="">Select alcohol consumption...</option>
+						<option value="None">None</option>
+						<option value="Occasionally">Occasionally</option>
+						<option value="Once a week">Once a week</option>
+						<option value="Few times a week">Few times a week</option>
+						<option value="Daily">Daily</option>
+					</select>
+					<span asp-validation-for="AlcoholConsumption" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label for="CaffeineIntake">Caffeine Intake</label>
+					<select id="CaffeineIntake" asp-for="CaffeineIntake" class="form-select">
+						<option value="">Select caffeine intake...</option>
+						<option value="None">None</option>
+						<option value="Occasionally">Occasionally</option>
+						<option value="1-2 Cups per day">1-2 Cups per day</option>
+						<option value="3-4 Cups per day">3-4 Cups per day</option>
+						<option value="More than 4 Cups per day">More than 4 Cups per day</option>
+					</select>
+					<span asp-validation-for="CaffeineIntake" class="text-danger"></span>
+				</div>
+
+
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="WaterConsumption" class="form-label"> Su Tüketimi</label>
+					<select asp-for="WaterConsumption" class="form-select">
+						<option value="">Günlük su tüketimini seçin</option>
+						<option value="Günlük 1 Litreden den az">Günlük 1 Litreden den az</option>
+						<option value="1-2 Litre arası">1-2 Litre arası</option>
+						<option value="2-3 Litre arası">2-3 Litre arası</option>
+						<option value="3 Litreden fazla">3 Litreden fazla</option>
+					</select>
+					<span asp-validation-for="WaterConsumption" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="MotivationLevel">Motivation Level</label>
+					<input asp-for="MotivationLevel" type=" text" class="form-control" placeholder="Enter motivation level..." />
+					<span asp-validation-for="MotivationLevel" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="SocialSupport">Social Support</label>
+					<textarea asp-for="SocialSupport" type="text" class="form-control" placeholder="Enter social support details..."></textarea>
+					<span asp-validation-for="SocialSupport" class="text-danger"></span>
+				</div>
+            </div>
+        </fieldset>
+
+        <!-- Yeme Alışkanlıkları Bölümü -->
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Yeme Alışkanlıkları</legend>
+            <div class="row">
+				<div class="col-md-6 mb-3">
+					<label asp-for="MealTimes"></label>
+					<textarea asp-for="MealTimes" class="form-control"></textarea>
+					<span asp-validation-for="MealTimes" class="text-danger"></span>
+				</div>
+
+
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="ConsumedFoods"></label>
+					<textarea asp-for="ConsumedFoods" class="form-control"></textarea>
+					<span asp-validation-for="ConsumedFoods" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="SnackingHabits"></label>
+					<textarea asp-for="SnackingHabits" class="form-control"></textarea>
+					<span asp-validation-for="SnackingHabits" class="text-danger"></span>
+				</div>
+
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="EatingOutHabits"> Dışardan Yemek Yeme Alışkanlığı</label>
+					<textarea asp-for="EatingOutHabits" class="form-control"></textarea>
+					<span asp-validation-for="EatingOutHabits" class="text-danger"></span>
+				</div>
+
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="EatingDuration">Yemek Yeme Süresi </label>
+					<textarea asp-for="EatingDuration" class="form-control"></textarea>
+					<span asp-validation-for="EatingDuration" class="text-danger"></span>
+				</div>
+
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="DessertConsumption">Tatlı Tüektimi </label>
+					<textarea asp-for="DessertConsumption" class="form-control"></textarea>
+					<span asp-validation-for="DessertConsumption" class="text-danger"></span>
+				</div>
+
+
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="CookingMethod">yemek Pişirme Yöntemi </label>
+					<textarea asp-for="CookingMethod" class="form-control"></textarea>
+					<span asp-validation-for="CookingMethod" class="text-danger"></span>
+				</div>
+            </div>
+        </fieldset>
+
+		@* 		Hedefler  *@ 
+		<fieldset>
+			<legend class="w-auto px-2">Hedefler</legend>
+
+			<div class="row">
+				<div class="col-md-6 mb-3">
+					<label asp-for="WeightGoal"></label>
+					<textarea asp-for="WeightGoal" class="form-control"></textarea>
+					<span asp-validation-for="WeightGoal" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label asp-for="HealthIssuesManagement"></label>
+					<textarea asp-for="HealthIssuesManagement" class="form-control"></textarea>
+					<span asp-validation-for="HealthIssuesManagement" class="text-danger"></span>
+				</div>
+
+				<div class=" col-md-6 mb-3">
+					<label asp-for="SportsPerformanceGoals"></label>
+					<textarea asp-for="SportsPerformanceGoals" class="form-control"></textarea>
+					<span asp-validation-for="SportsPerformanceGoals" class="text-danger"></span>
+				</div>
+
+				<div class=" col-md-6 mb-3">
+					<label asp-for="OtherGoals"></label>
+					<textarea asp-for="OtherGoals" class="form-control"></textarea>
+					<span asp-validation-for="OtherGoals" class="text-danger"></span>
+				</div>
+			</div>
+		</fieldset>
+
+
+		@* Tıbbi Geçmiş *@
+		<fieldset>
+			<legend class="w-auto px-2">Tıbbi Geçmiş</legend>
+			<div class="row">
+				<div class=" col-md-6 mb-3">
+					<label asp-for="MedicationName">İlaç isimleri  </label>
+					<textarea asp-for="MedicationName" class="form-control"></textarea>
+					<span asp-validation-for="MedicationName" class="text-danger"></span>
+				</div>
+
+				<div class=" col-md-6 mb-3">
+					<label asp-for="DiseaseNameD">Bireysel Hastalık  </label>
+					<textarea asp-for="DiseaseNameD" class="form-control"></textarea>
+					<span asp-validation-for="DiseaseNameD" class="text-danger"></span>
+				</div>
+
+
+				<div class=" col-md-6 mb-3">
+					<label asp-for="DiseaseNameF">Kalıtsal Hastalık  </label>
+					<textarea asp-for="DiseaseNameF" class="form-control"></textarea>
+					<span asp-validation-for="DiseaseNameF" class="text-danger"></span>
+				</div>
+
+
+				<div class=" col-md-6 mb-3">
+					<label asp-for="AllergyName">Alerjiler </label>
+					<textarea asp-for="AllergyName" class="form-control"></textarea>
+					<span asp-validation-for="AllergyName" class="text-danger"></span>
+				</div>
+			</div>
+
+		</fieldset>
+
+        <button type="submit" class="btn btn-success">Bilgilerimi Kayıt Et</button>
+    </form>
+</div>
