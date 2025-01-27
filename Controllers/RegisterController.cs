@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using DietApp.Models;
 using Microsoft.AspNetCore.Hosting;
-
-    
 namespace DietApp.Controllers
 {
     public class RegisterController : Controller

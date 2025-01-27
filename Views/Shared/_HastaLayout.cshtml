@@ -1,40 +1,93 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] - Hasta Paneli</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DietApp</title>
+    <script type="importmap"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Bootstrap Icons (opsiyonel, ikonlar için) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DietApp.styles.css" asp-append-version="true" />
+
+    <style>
+        /* Navbar'a özel stil örneği */
+        .navbar-custom {
+            background: linear-gradient(to right, #4b6cb7, #182848);
+        }
+
+            .navbar-custom .navbar-brand,
+            .navbar-custom .nav-link {
+                color: #fff !important;
+            }
+
+                .navbar-custom .nav-link:hover {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border-radius: 5px;
+                }
+
+        .navbar-brand.fs-3 {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/Hasta/HastaPage">Anasayfa</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/HastaBilgilerim">Bilgilerim</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Diyet/DiyetListem">Diyet Listem</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/Logout">Çıkış</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <header>
+        <!-- Burada navbar-dark ve navbar-custom sınıflarını kullanıyoruz -->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
+            <div class="container">
+                <!-- Marka ismi büyütüldü ve rengi beyaz yapıldı -->
+                <a class="navbar-brand fs-3" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-heart-pulse-fill me-2"></i>DietApp
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Menüyü sağa itmek için ms-auto, linklere ikon eklendi -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto fs-5">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="HastaPage">
+                                <i class="bi bi-house-fill me-1"></i>Anasayfa
+                            </a>
+                        </li>
+                      
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="PatientInfo" asp-action="PatientInfos">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>PatientInfo
+                            </a>
+                        </li>
 
-    <!-- Main Content -->
-    <div class="container mt-4">
-        @RenderBody()
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Logout">Çıkış</a>
+                        </li>
+
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

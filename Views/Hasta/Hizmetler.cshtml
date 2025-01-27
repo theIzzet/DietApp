@@ -1,0 +1,250 @@
+﻿@{
+    ViewData["Title"] = "Hizmet Sayfa";
+
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet / Hizmet Detay</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <!-- Bootstrap Icons (opsiyonel) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+<body>
+
+    <!-- Diyet / Hizmet Bilgisi -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Örnek Görsel -->
+                <img src="https://via.placeholder.com/600x400" class="img-fluid rounded" alt="Diyet Görseli">
+            </div>
+            <div class="col-md-6">
+                <h1 class="mb-3">Hastalıklar ve Diyet</h1>
+                <p class="fs-5">
+                    Bu diyet türü, farklı hastalık durumlarında (ör. diyabet, hipertansiyon, kalp hastalıkları)
+                    özel beslenme planları içermektedir. Amaç, tıbbi tedaviyi desteklemek,
+                    semptomları hafifletmek ve yaşam kalitesini artırmaktır.
+                </p>
+                <p>
+                    Eğer kronik bir rahatsızlığınız varsa veya özel bir diyet programı uyguluyorsanız,
+                    mutlaka uzman diyetisyen desteği almanız önerilir.
+                    Aşağıda bu alanda uzmanlaşmış diyetisyenlere ulaşabilirsiniz.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Doktorlar (Carousel) -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Bu Alanda Uzman Diyetisyenler / Doktorlar</h2>
+
+        <!-- Ekstil: Kart, Resim ve Buton Tasarımı -->
+        <style>
+            /* Kart hover efekti */
+            .card.h-100.shadow {
+                transition: transform 0.3s ease;
+            }
+
+                .card.h-100.shadow:hover {
+                    transform: scale(1.02);
+                }
+
+            /* Resim çerçevesi kare ve küçültülmüş */
+            .doctor-image {
+                width: 80%; /* Kart genişliğine göre ayarladık */
+                margin: 0 auto; /* Ortalıyoruz */
+                border: 3px solid #007bff; /* Çerçeve rengi */
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+                border-radius: 0; /* Kare çerçeve */
+                overflow: hidden; /* Taşan görselleri kes */
+            }
+
+                .doctor-image img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                }
+
+            /* Buton daha büyük ve dikkat çekici */
+            .btn-custom {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 30px;
+                font-weight: bold;
+            }
+        </style>
+
+        <div id="doctorCarousel" class="carousel slide position-relative" data-bs-ride="carousel">
+            <!-- Carousel Indicators (isteğe bağlı) -->
+            <div class="carousel-indicators">
+                <button type="button"
+                        data-bs-target="#doctorCarousel"
+                        data-bs-slide-to="0"
+                        class="active"
+                        aria-current="true"
+                        aria-label="Slide 1">
+                </button>
+                <button type="button"
+                        data-bs-target="#doctorCarousel"
+                        data-bs-slide-to="1"
+                        aria-label="Slide 2">
+                </button>
+            </div>
+
+            <div class="carousel-inner">
+                <!-- Slide 1 (3 doktor) -->
+                <div class="carousel-item active">
+                    <div class="row text-center">
+                        <!-- Doktor 1 -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow border-0">
+                                <div class="doctor-image mt-3">
+                                    <img src="~/css/besbant.png"
+                                         alt="Dr. Ahmet Yılmaz">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Dr. Ahmet Yılmaz</h5>
+                                    <p class="card-text">
+                                        Kronik hastalıklar ve diyet tedavisi alanında uzman.
+                                    </p>
+                                </div>
+                                <div class="card-footer text-end bg-white border-0">
+                                    <a href="#" class="btn btn-primary btn-custom">Profil</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Doktor 2 -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow border-0">
+                                <div class="doctor-image mt-3">
+                                    <img src="~/css/besbant.png"
+                                         alt="Dyt. Elif Kaya">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Dyt. Elif Kaya</h5>
+                                    <p class="card-text">
+                                        Diyabet, obezite ve metabolik hastalıklarda uzman diyetisyen.
+                                    </p>
+                                </div>
+                                <div class="card-footer text-end bg-white border-0">
+                                    <a asp-controller="Hasta" asp-action="DoktorlarSayfa" class="btn btn-primary btn-custom">
+                                        Daha Fazla Bilgi Al
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Doktor 3 -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow border-0">
+                                <div class="doctor-image mt-3">
+                                    <img src="~/css/besbant.png"
+                                         alt="Dr. Selin Demir">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Dr. Selin Demir</h5>
+                                    <p class="card-text">
+                                        Kalp hastalıkları ve hipertansiyonda beslenme tedavisi.
+                                    </p>
+                                </div>
+                                <div class="card-footer text-end bg-white border-0">
+                                    <a href="#" class="btn btn-primary btn-custom">Profil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 (3 doktor) -->
+                <div class="carousel-item">
+                    <div class="row text-center">
+                        <!-- Doktor 4 -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow border-0">
+                                <div class="doctor-image mt-3">
+                                    <img src="~/css/besbant.png"
+                                         alt="Dyt. Merve Koç">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Dyt. Merve Koç</h5>
+                                    <p class="card-text">
+                                        Tiroid hastalıkları ve insülin direncinde diyet programları.
+                                    </p>
+                                </div>
+                                <div class="card-footer text-end bg-white border-0">
+                                    <a href="#" class="btn btn-primary btn-custom">Profil</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Doktor 5 -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow border-0">
+                                <div class="doctor-image mt-3">
+                                    <img src="~/css/besbant.png"
+                                         alt="Dr. Mehmet Arslan">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Dr. Mehmet Arslan</h5>
+                                    <p class="card-text">
+                                        Gastroenterolojik problemlerde (ör. reflü, ülser) diyet uzmanı.
+                                    </p>
+                                </div>
+                                <div class="card-footer text-end bg-white border-0">
+                                    <a href="#" class="btn btn-primary btn-custom">Profil</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Doktor 6 -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow border-0">
+                                <div class="doctor-image mt-3">
+                                    <img src="~/css/besbant.png"
+                                         alt="Uzm. Dyt. Hale Yıldırım">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Uzm. Dyt. Hale Yıldırım</h5>
+                                    <p class="card-text">
+                                        Böbrek yetmezliği ve karaciğer hastalıklarında beslenme tedavisi.
+                                    </p>
+                                </div>
+                                <div class="card-footer text-end bg-white border-0">
+                                    <a href="#" class="btn btn-primary btn-custom">Profil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#doctorCarousel"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Önceki</span>
+            </button>
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#doctorCarousel"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Sonraki</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
