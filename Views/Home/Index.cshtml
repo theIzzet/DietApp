@@ -1,8 +1,765 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Diyet Hizmeti</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <style>
+        /* İsteğe bağlı küçük CSS dokunuşları */
+        .carousel-inner img {
+            height: 300px;
+            object-fit: cover;
+        }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        .carousel-caption {
+            color: #fff;
+            background-color: rgba(0,0,0,0.4);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .icon-feature {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #0d6efd; /* Bootstrap primary rengini kullandık */
+        }
+
+        .feature-card {
+            border: none;
+            background-color: #f8f9fa;
+        }
+
+            .feature-card:hover {
+                background-color: #e9ecef;
+            }
+
+        .accordion-button::after {
+            margin-left: auto;
+        }
+
+        .bg-custom-gradient {
+            background: linear-gradient(to right, #86e3ce, #d0e6a5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CAROUSEL -->
+    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Carousel Indicators (6 adet) -->
+        <div class="carousel-indicators">
+            <button type="button"
+                    data-bs-target="#mainCarousel"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1">
+            </button>
+            <button type="button"
+                    data-bs-target="#mainCarousel"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2">
+            </button>
+            <button type="button"
+                    data-bs-target="#mainCarousel"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3">
+            </button>
+            <button type="button"
+                    data-bs-target="#mainCarousel"
+                    data-bs-slide-to="3"
+                    aria-label="Slide 4">
+            </button>
+            <button type="button"
+                    data-bs-target="#mainCarousel"
+                    data-bs-slide-to="4"
+                    aria-label="Slide 5">
+            </button>
+            <button type="button"
+                    data-bs-target="#mainCarousel"
+                    data-bs-slide-to="5"
+                    aria-label="Slide 6">
+            </button>
+        </div>
+
+        <!-- Carousel Slides (6 adet) -->
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <img src="~/css/besbant.png"
+                     class="d-block w-100"
+                     alt="Slide 1" />
+                <div class="carousel-caption">
+                    <h5>Özel Diyet Programları</h5>
+                    <p>Kişiye özel ve sürdürülebilir beslenme planları.</p>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <img src="~/css/besbant.png"
+                     class="d-block w-100"
+                     alt="Slide 2" />
+                <div class="carousel-caption">
+                    <h5>Profesyonel Takip</h5>
+                    <p>Diyetisyeninizle anlık iletişim ve düzenli kontrol.</p>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <img src="~/css/besbant.png"
+                     class="d-block w-100"
+                     alt="Slide 3" />
+                <div class="carousel-caption">
+                    <h5>Kolay Kullanım</h5>
+                    <p>Ölçümlerinizi ve öğünlerinizi hızla kaydedin.</p>
+                </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="carousel-item">
+                <img src="~/css/besbant.png"
+                     class="d-block w-100"
+                     alt="Slide 4" />
+                <div class="carousel-caption">
+                    <h5>Mobil Uygulama</h5>
+                    <p>Her an, her yerde takip ve bildirim kolaylığı.</p>
+                </div>
+            </div>
+            <!-- Slide 5 -->
+            <div class="carousel-item">
+                <img src="~/css/besbant.png"
+                     class="d-block w-100"
+                     alt="Slide 5" />
+                <div class="carousel-caption">
+                    <h5>Güvenli Veri Saklama</h5>
+                    <p>Bulut tabanlı, şifreli ve korumalı veri altyapısı.</p>
+                </div>
+            </div>
+            <!-- Slide 6 -->
+            <div class="carousel-item">
+                <img src="~/css/besbant.png"
+                     class="d-block w-100"
+                     alt="Slide 6" />
+                <div class="carousel-caption">
+                    <h5>Uzman Kadro</h5>
+                    <p>Tecrübeli diyetisyenlerden sürekli destek alın.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carousel Controls (renk görünürlüğü için ek stil) -->
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#mainCarousel"
+                data-bs-slide="prev">
+            <!-- filter: invert(1); ile okunabilirliği artırdık -->
+            <span class="carousel-control-prev-icon"
+                  style="filter: invert(1);"
+                  aria-hidden="true">
+            </span>
+            <span class="visually-hidden">Önceki</span>
+        </button>
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#mainCarousel"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon"
+                  style="filter: invert(1);"
+                  aria-hidden="true">
+            </span>
+            <span class="visually-hidden">Sonraki</span>
+        </button>
+    </div>
+
+
+    <!-- ONLINE DIYET HİZMETİ (Özet Bilgi) -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Online Diyet Hizmeti</h2>
+        <div class="row g-4">
+            <!-- Kart 1 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card text-center p-3">
+                    <i class="bi bi-person-check-fill icon-feature"></i>
+                    <h5 class="card-title">Kişisel Veriler</h5>
+                    <p class="card-text">
+                        Boy, kilo, tıbbi geçmiş ve hedefler sisteme kolayca eklenir.
+                    </p>
+                </div>
+            </div>
+            <!-- Kart 2 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card text-center p-3">
+                    <i class="bi bi-calendar-check-fill icon-feature"></i>
+                    <h5 class="card-title">Randevu ve Planlama</h5>
+                    <p class="card-text">
+                        Diyetisyen seçimi, randevu talebi ve kişiye özel programlar.
+                    </p>
+                </div>
+            </div>
+            <!-- Kart 3 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card text-center p-3">
+                    <i class="bi bi-camera-fill icon-feature"></i>
+                    <h5 class="card-title">Fotoğrafla Doğrulama</h5>
+                    <p class="card-text">
+                        Öğün ve ölçümlerin fotoğrafla kaydedilmesi, gerçeğe yakın takip.
+                    </p>
+                </div>
+            </div>
+            <!-- Kart 4 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card text-center p-3">
+                    <i class="bi bi-chat-dots-fill icon-feature"></i>
+                    <h5 class="card-title">Anlık İletişim</h5>
+                    <p class="card-text">
+                        Diyetisyenle mesajlaşma ve hızlı geri bildirim imkânı.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KİMLER KULLANABİLİR? (Accordion) -->
+    <div class="container mb-5">
+        <h3 class="text-center mb-4">Kimler Kullanabilir?</h3>
+        <div class="accordion" id="whoCanUseAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne"
+                            aria-expanded="true"
+                            aria-controls="collapseOne">
+                        Kilo Yönetimi İsteyenler
+                    </button>
+                </h2>
+                <div id="collapseOne"
+                     class="accordion-collapse collapse show"
+                     aria-labelledby="headingOne"
+                     data-bs-parent="#whoCanUseAccordion">
+                    <div class="accordion-body">
+                        Hem kilo vermek hem de almak isteyen bireyler, beslenme
+                        düzenlerini optimize ederek sağlıklı sonuçlar elde edebilir.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo"
+                            aria-expanded="false"
+                            aria-controls="collapseTwo">
+                        Sporcular ve Aktif Yaşam
+                    </button>
+                </h2>
+                <div id="collapseTwo"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingTwo"
+                     data-bs-parent="#whoCanUseAccordion">
+                    <div class="accordion-body">
+                        Spor performansını artırmak isteyenler, özel egzersiz
+                        programlarına ve yüksek proteinli diyetlere ihtiyaç duyabilir.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree"
+                            aria-expanded="false"
+                            aria-controls="collapseThree">
+                        Hastalık Yönetimi
+                    </button>
+                </h2>
+                <div id="collapseThree"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingThree"
+                     data-bs-parent="#whoCanUseAccordion">
+                    <div class="accordion-body">
+                        Diyabet, kalp hastalıkları, hipertansiyon vb. rahatsızlıkları
+                        olan bireyler, uzman eşliğinde kontrollü diyet planı oluşturabilir.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NASIL ÇALIŞIR? (3 Adımlı Kart Düzeni) -->
+    <div class="bg-custom-gradient py-5">
+        <div class="container">
+            <h3 class="text-center mb-4">Nasıl Çalışır?</h3>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-pencil-square icon-feature"></i>
+                            <h5 class="card-title">1. Kayıt Olun</h5>
+                            <p class="card-text">
+                                Kısa bir form doldurarak
+                                kişisel bilgilerinizi ve hedeflerinizi girin.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-search icon-feature"></i>
+                            <h5 class="card-title">2. Diyetisyen Seçin</h5>
+                            <p class="card-text">
+                                Uzman profilleri arasından size
+                                uygun diyetisyeni bulun ve randevu talep edin.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-graph-up icon-feature"></i>
+                            <h5 class="card-title">3. Takip Edin</h5>
+                            <p class="card-text">
+                                Planlanan diyet ve egzersizi uygulayın,
+                                fotoğraf veya metinle ölçümlerinizi paylaşın.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HİZMETLERİMİZ (Card Group) -->
+    <!-- HİZMETLERİMİZ (Card Group) -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Hizmetlerimiz</h2>
+
+        <!-- Ekstil: Kart tasarımı için hover efekti, geçiş süresi ve buton şekli -->
+        <style>
+            .card.hover-effect {
+                transition: transform 0.3s ease;
+            }
+
+                .card.hover-effect:hover {
+                    transform: scale(1.02);
+                }
+
+            .btn-custom {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 30px; /* Daha oval buton */
+            }
+        </style>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <!-- 1. Kart: Obezite ve Kilo Kontrolü -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Obezite ve Kilo Kontrolü"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Obezite ve Kilo Kontrolü</h4>
+                        <p class="card-text fs-5">
+                            Obezite ve Kilo Kontrolü
+                        </p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Kart: Hastalıklar ve Diyet -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Hastalıklar ve Diyet"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Hastalıklar ve Diyet</h4>
+                        <p class="card-text fs-5">
+                            Hastalıklarda Beslenme ve Diyet Tedavisi
+                        </p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Kart: Yeme Davranış Bozuklukları -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Yeme Davranış Bozukluklarında Beslenme"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Yeme Davranış Bozukluklarında Beslenme</h4>
+                        <p class="card-text fs-5">
+                            Yeme Davranış Bozukluklarında Beslenme
+                        </p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Kart: Hamilelikte Beslenme ve Kilo Kontrolü -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Hamilelikte Beslenme ve Kilo Kontrolü"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Hamilelikte Beslenme ve Kilo Kontrolü</h4>
+                        <p class="card-text fs-5">
+                            Hamilelik Döneminde Beslenme ve Kilo Kontrolü
+                        </p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Kart: Emziklik Dönemi Beslenme -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Emziklik Döneminde Beslenme ve Kilo Kontrolü"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Emziklik Dönemi Beslenme ve Diyet</h4>
+                        <p class="card-text fs-5">
+                            Emziklik Döneminde Beslenme ve Kilo Kontrolü
+                        </p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Kart: Beslenme ve Çocuk -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Beslenme ve Çocuk"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Beslenme ve Çocuk</h4>
+                        <p class="card-text fs-5">
+                            Okul Öncesi Dönem ve Adölesan Dönemde Beslenme
+                        </p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Kart: Sporcu Beslenmesi -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Sporcu Beslenmesi"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Sporcu Beslenmesi</h4>
+                        <p class="card-text fs-5">Sporcu Beslenmesi</p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Kart: Online Diyet -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Online Diyet"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Online Diyet</h4>
+                        <p class="card-text fs-5">Online Diyet Hizmet</p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Kart: Kurumsal Beslenme ve Danışmanlık -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow hover-effect">
+                    <img src="~/css/besbant.png"
+                         class="card-img-top"
+                         alt="Kurumsal Beslenme ve Danışmanlık"
+                         style="height: 180px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h4 class="card-title fw-bold">Kurumsal Beslenme ve Danışmanlık</h4>
+                        <p class="card-text fs-5">Kurumsal Beslenme Danışmanlığı</p>
+                    </div>
+                    <div class="card-footer border-0 bg-white text-end">
+                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
+                            Daha Fazla Bilgi Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ÖNE ÇIKAN ÖZELLİKLER (Icon Grid) -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Öne Çıkan Özellikler</h2>
+        <div class="row text-center g-4">
+            <div class="col-md-3">
+                <i class="bi bi-bell-fill icon-feature"></i>
+                <h5>Otomatik Hatırlatmalar</h5>
+                <p>Öğün, su tüketimi ve egzersiz bildirimleri</p>
+            </div>
+            <div class="col-md-3">
+                <i class="bi bi-cloud-arrow-up-fill icon-feature"></i>
+                <h5>Bulut Tabanlı Kayıt</h5>
+                <p>Tüm veriler güvenli bir şekilde saklanır</p>
+            </div>
+            <div class="col-md-3">
+                <i class="bi bi-diagram-3-fill icon-feature"></i>
+                <h5>Grafiksel Analiz</h5>
+                <p>Kilo ve ölçüm ilerlemesini grafiklerle izleme</p>
+            </div>
+            <div class="col-md-3">
+                <i class="bi bi-shield-lock-fill icon-feature"></i>
+                <h5>Güvenli İletişim</h5>
+                <p>Hasta-diyetisyen mesajları şifreli ve korumalı</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBİL UYGULAMA AVANTAJLARI (Reklam) -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Mobil Uygulama Avantajları</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div id="appCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="~/css/besbant.png"
+                                     class="d-block w-100"
+                                     alt="Mobil 1" />
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/css/besbant.png"
+                                     class="d-block w-100"
+                                     alt="Mobil 2" />
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/css/besbant.png"
+                                     class="d-block w-100"
+                                     alt="Mobil 3" />
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev"
+                                type="button"
+                                data-bs-target="#appCarousel"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Önceki</span>
+                        </button>
+                        <button class="carousel-control-next"
+                                type="button"
+                                data-bs-target="#appCarousel"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Sonraki</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            Kişiselleştirilmiş diyet programı cebinizde
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            Öğün ve su tüketimi hatırlatmaları
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            Diyetisyenlerle anlık mesajlaşma
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            Kolay fotoğrafla ölçüm doğrulama
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <!-- Hakkımızda -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="fw-bold text-uppercase mb-3">Hakkımızda</h5>
+                    <p class="small">
+                        Online Diyet, diyetisyen ve danışanların tek platformda buluştuğu kapsamlı bir sağlıklı yaşam rehberidir.
+                        Uzman diyetisyen desteği, kişiye özel diyet planları ve anlık takip olanağı sunar.
+                    </p>
+                </div>
+
+                <!-- Hızlı Linkler -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="fw-bold text-uppercase mb-3">Hızlı Linkler</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#" class="text-white text-decoration-none">
+                                <i class="bi bi-caret-right-fill"></i> Anasayfa
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-white text-decoration-none">
+                                <i class="bi bi-caret-right-fill"></i> Popüler Diyetler
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-white text-decoration-none">
+                                <i class="bi bi-caret-right-fill"></i> Diyetisyenler
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-white text-decoration-none">
+                                <i class="bi bi-caret-right-fill"></i> İletişim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white text-decoration-none">
+                                <i class="bi bi-caret-right-fill"></i> Sık Sorulan Sorular
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- İletişim Bilgileri -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="fw-bold text-uppercase mb-3">İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            <span class="small">+90 123 456 78 90</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-envelope-fill me-2"></i>
+                            <span class="small">info@onlinediyet.com</span>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            <span class="small">Ankara, Türkiye</span>
+                        </li>
+                    </ul>
+                    <p class="small mb-0">
+                        <strong>Çalışma Saatleri:</strong><br />
+                        Hafta İçi: 09.00 - 18.00<br />
+                        Cumartesi: 10.00 - 14.00
+                    </p>
+                </div>
+
+                <!-- Bülten Aboneliği -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="fw-bold text-uppercase mb-3">Bültenimize Katıl</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label for="newsletterEmail" class="form-label small">E-Posta Adresiniz</label>
+                            <input type="email"
+                                   class="form-control form-control-sm"
+                                   id="newsletterEmail"
+                                   placeholder="E-mail giriniz"
+                                   required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm w-100">
+                            Abone Ol
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alt Satır / Telif ve Sosyal Medya -->
+        <div class="container">
+            <div class="row border-top pt-3">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-0">&copy; 2025 Online Diyet. Tüm hakları saklıdır.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none me-3 small">Gizlilik Politikası</a>
+                    <a href="#" class="text-white text-decoration-none me-3 small">Kullanım Şartları</a>
+                    <!-- Sosyal Medya İkonları -->
+                    <a href="#" class="text-white text-decoration-none me-2">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="#" class="text-white text-decoration-none me-2">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="#" class="text-white text-decoration-none">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

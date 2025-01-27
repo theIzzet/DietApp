@@ -5,63 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - DietApp</title>
     <script type="importmap"></script>
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Bootstrap Icons (opsiyonel, ikonlar için) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DietApp.styles.css" asp-append-version="true" />
+
+    <style>
+        /* Navbar'a özel stil örneği */
+        .navbar-custom {
+            background: linear-gradient(to right, #4b6cb7, #182848);
+        }
+
+            .navbar-custom .navbar-brand,
+            .navbar-custom .nav-link {
+                color: #fff !important;
+            }
+
+                .navbar-custom .nav-link:hover {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border-radius: 5px;
+                }
+
+        .navbar-brand.fs-3 {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DietApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <!-- Burada navbar-dark ve navbar-custom sınıflarını kullanıyoruz -->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
+            <div class="container">
+                <!-- Marka ismi büyütüldü ve rengi beyaz yapıldı -->
+                <a class="navbar-brand fs-3" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-heart-pulse-fill me-2"></i>DietApp
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <!-- Menüyü sağa itmek için ms-auto, linklere ikon eklendi -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto fs-5">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-fill me-1"></i>Anasayfa
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Register" asp-action="UserRegister">
+                                <i class="bi bi-person-plus-fill me-1"></i>Kayıt Ol
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area=""
-                               asp-controller="Register"
-                               asp-action="UserRegister">Kayıt Ol</a>
+                            <a class="nav-link" asp-area="" asp-controller="Register" asp-action="DiyetisyenRegister">
+                                <i class="bi bi-briefcase-fill me-1"></i>Hizmet Ver
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area=""
-                               asp-controller="Register"
-                               asp-action="DiyetisyenRegister">Hizmet Ver</a>
+                            <a class="nav-link" asp-area="" asp-controller="PatientInfo" asp-action="PatientInfos">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>PatientInfo
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area=""
-                               asp-controller="Login"
-                               asp-action="Login">Login</a>
+                            <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Login">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>Giriş Yap
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area=""
-                               asp-controller="PatientInfo"
-                               asp-action="PatientInfos">PatientInfo</a>
-                        </li>
+
+
+
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - DietApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+
+    <!-- Bootstrap JS -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

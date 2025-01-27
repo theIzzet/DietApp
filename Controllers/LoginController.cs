@@ -53,7 +53,7 @@ namespace DietApp.Controllers
                         if (roles.Contains("Hasta"))
                         {
                             // Hasta sayfasına yönlendir
-                            return RedirectToAction("Index", "Home", new { userId = user.Id });
+                            return RedirectToAction("HastaPage", "Home", new { userId = user.Id });
                         }
                         else if (roles.Contains("Diyetisyen"))
                         {
