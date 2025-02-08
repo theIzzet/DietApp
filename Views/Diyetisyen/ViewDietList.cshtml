@@ -1,0 +1,70 @@
+﻿@model IEnumerable<DietApp.Entities.DietList>
+
+@{
+    ViewData["Title"] = "Diyet Listeleri";
+}
+
+<style>
+    .diet-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .diet-card {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        font-size: 16px;
+    }
+
+    .diet-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #2E7D32;
+    }
+
+    .diet-date {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .back-btn {
+        display: block;
+        margin-top: 20px;
+        padding: 10px 15px;
+        background: #ff9800;
+        color: white;
+        text-align: center;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .back-btn:hover {
+            background: #e68900;
+        }
+</style>
+
+<div class="diet-container">
+    <h2>📋 @ViewBag.PatientName'nin Diyet Listeleri</h2>
+    <hr />
+    @if (Model.Any())
+    {
+        @foreach (var diet in Model)
+        {
+            <div class="diet-card">
+                <div class="diet-title">📝 @diet.Description</div>
+                <div class="diet-date">📅 Oluşturulma Tarihi: @diet.CreatedAt.ToString("dd MMM yyyy")</div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Bu hastaya ait kayıtlı bir diyet listesi bulunmamaktadır.</p>
+    }
+    <a asp-action="Patients" class="back-btn">⬅ Geri Dön</a>
+</div>

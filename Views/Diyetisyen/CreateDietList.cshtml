@@ -1,0 +1,51 @@
+﻿@model DietApp.Entities.DietList
+
+@{
+    ViewData["Title"] = "Diyet Listesi Oluştur";
+}
+
+<style>
+    .diet-form {
+        max-width: 600px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .diet-form h2 {
+            color: #2E7D32;
+        }
+
+    .diet-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    .submit-btn {
+        background: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .submit-btn:hover {
+            background: #2E7D32;
+        }
+</style>
+
+<div class="diet-form">
+    <h2>📋 Yeni Diyet Listesi</h2>
+    <form asp-action="CreateDietList" method="post">
+        <input type="hidden" asp-for="PersonalInfoId" />
+        <textarea asp-for="Description" class="diet-input" placeholder="Diyet listesini girin..." rows="5"></textarea>
+        <button type="submit" class="submit-btn">Kaydet</button>
+    </form>
+</div>

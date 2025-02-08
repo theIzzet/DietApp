@@ -143,13 +143,13 @@ namespace DietApp.Controllers
         }
 
 
-        // Diyetisyen Page
         [Authorize(Roles = "Diyetisyen")]
-        public async Task<IActionResult> DiyetisyenPage(string userId)
+        public async Task<IActionResult> DiyetisyenPage()
         {
+            var userId = _userManager.GetUserId(User);
             if (string.IsNullOrEmpty(userId))
             {
-                return BadRequest("Kullanıcı ID'si eksik.");
+                return Unauthorized("Kullanıcı oturum açmamış.");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
@@ -158,9 +158,11 @@ namespace DietApp.Controllers
                 return NotFound("Kullanıcı bulunamadı.");
             }
 
-            ViewBag.UserName = $"{user.Name} {user.SurName}";
-            return View();
+            // Kullanıcı bilgileri başarılı şekilde bulunduysa DiyetisyenController içindeki Profile metoduna yönlendir
+            return RedirectToAction("Profile", "Diyetisyen");
         }
+
+
         [Authorize]
         public async Task<IActionResult> Logout()
         {

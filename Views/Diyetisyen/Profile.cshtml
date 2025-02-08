@@ -1,0 +1,257 @@
+﻿@model DietApp.Entities.DiyetisyenProfile
+
+@{
+    ViewData["Title"] = "Diyetisyen Profil Sayfası";
+}
+
+<style>
+    /* Genel Sayfa Stili */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Profil Kapsayıcı */
+    .profile-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    /* Üst Menü */
+    .top-menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .patients-btn, .accept-patient-btn {
+        background: #ff9800;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        border: none;
+        cursor: pointer;
+    }
+
+        .patients-btn:hover {
+            background: #e68900;
+        }
+
+    .accept-patient-btn {
+        background: #4CAF50;
+    }
+
+        .accept-patient-btn:hover {
+            background: #2E7D32;
+        }
+
+    /* Profil Kartı */
+    .profile-card {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        color: white;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Profil Resmi */
+    .profile-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid white;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    /* Profil Başlığı */
+    .profile-name {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    /* Profil Hakkımda */
+    .profile-about {
+        font-size: 16px;
+        color: white;
+        opacity: 0.9;
+        margin-top: 10px;
+    }
+
+    /* Bölüm Başlıkları */
+    .profile-section {
+        margin-top: 20px;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .profile-section h3 {
+            font-size: 20px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+            color: #2E7D32;
+        }
+
+    /* Hasta Kabul Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .close {
+        color: red;
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .submit-btn {
+        background: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: 0.3s;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+        .submit-btn:hover {
+            background: #2E7D32;
+        }
+    /* Düzenleme Butonu */
+    .edit-btn-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .edit-btn {
+        display: inline-block;
+        background: #007BFF;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+        .edit-btn:hover {
+            background: #0056b3;
+        }
+</style>
+
+<div class="profile-container">
+    <div class="top-menu">
+        <a asp-action="Patients" asp-controller="Diyetisyen" class="patients-btn">Hastalarım</a>
+        <button class="accept-patient-btn" onclick="openPatientModal()">Hasta Kabul</button>
+    </div>
+
+    <div class="profile-card">
+        <div class="profile-header">
+            <img src="@Model.ProfilePicturePath" alt="Profil Resmi" class="profile-img">
+            <h2 class="profile-name">@User.Identity.Name</h2>
+        </div>
+        <p class="profile-about">@Model.About</p>
+    </div>
+
+    <div class="profile-section">
+        <h3>Sertifikalar</h3>
+        @if (Model.Certificates != null && Model.Certificates.Any())
+        {
+            <ul class="certificates-list">
+                @foreach (var cert in Model.Certificates)
+                {
+                    <li class="cert-item">
+                        <a href="@cert.FilePath" target="_blank" class="cert-link">📜 Sertifika</a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted">Henüz sertifika eklenmedi.</p>
+        }
+    </div>
+
+    <div class="profile-section">
+        <h3>Deneyimler</h3>
+        @if (Model.Experiences != null && Model.Experiences.Any())
+        {
+            <ul class="experience-list">
+                @foreach (var exp in Model.Experiences)
+                {
+                    <li class="exp-item">📝 @exp.Description</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted">Henüz deneyim eklenmedi.</p>
+        }
+    </div>
+
+    <!-- Hasta Kabul Modal -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePatientModal()">&times;</span>
+            <h2>Hasta Ekle</h2>
+            <form asp-action="AcceptPatient" asp-controller="Diyetisyen" method="post">
+                <label for="patientId">Hasta ID:</label>
+                <input type="number" id="patientId" name="patientId" required>
+                <button type="submit" class="submit-btn">Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="edit-btn-container">
+        <a asp-action="EditProfile" asp-controller="Diyetisyen" class="edit-btn">🛠 Profilimi Düzenle</a>
+    </div>
+
+</div>
+
+<script>
+    function openPatientModal() {
+        document.getElementById("patientModal").style.display = "flex";
+    }
+
+    function closePatientModal() {
+        document.getElementById("patientModal").style.display = "none";
+    }
+</script>

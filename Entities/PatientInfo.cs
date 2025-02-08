@@ -64,7 +64,7 @@ namespace DietApp.Entities
 
 
 
-        //
+       
 
         public DietUser? User { get; set; }
     }

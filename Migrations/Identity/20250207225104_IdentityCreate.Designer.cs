@@ -3,6 +3,7 @@ using System;
 using DietApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietApp.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20250207225104_IdentityCreate")]
+    partial class IdentityCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -145,29 +148,6 @@ namespace DietApp.Migrations.Identity
                     b.HasIndex("UserId");
 
                     b.ToTable("Certificates");
-                });
-
-            modelBuilder.Entity("DietApp.Entities.DietList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("PersonalInfoId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonalInfoId");
-
-                    b.ToTable("DietLists");
                 });
 
             modelBuilder.Entity("DietApp.Entities.DiyetisyenProfile", b =>
@@ -366,6 +346,130 @@ namespace DietApp.Migrations.Identity
                     b.ToTable("PastMedicals");
                 });
 
+            modelBuilder.Entity("DietApp.Entities.PatientInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AlcoholConsumption")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CaffeineIntake")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConsumedFoods")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ContactInformation")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CookingMethod")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DailyInactivity")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("DailyMealCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DessertConsumption")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("DiyetisyenId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EatingDuration")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EatingOutHabits")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FoodIntolerances")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("HealthIssuesManagement")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("Height")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("MaritalStatus")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MealTimes")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MotivationLevel")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("NumberOfChildren")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NumberOfSmokingPackage")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Occupation")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OtherGoals")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RegularPhysicalActivity")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SleepPattern")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SmokingUtilezeYear")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SnackingHabits")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SocialSupport")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SportsPerformanceGoals")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StressLevel")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SurName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WaterConsumption")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double?>("Weight")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("WeightGoal")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiyetisyenId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PatientInfo");
+                });
+
             modelBuilder.Entity("DietApp.Entities.PersonalInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -377,9 +481,6 @@ namespace DietApp.Migrations.Identity
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("TEXT");
-
-                    b.Property<int?>("DiyetisyenId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Gender")
                         .HasColumnType("TEXT");
@@ -410,8 +511,6 @@ namespace DietApp.Migrations.Identity
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DiyetisyenId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -563,17 +662,6 @@ namespace DietApp.Migrations.Identity
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DietApp.Entities.DietList", b =>
-                {
-                    b.HasOne("DietApp.Entities.PersonalInfo", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PersonalInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("DietApp.Entities.DiyetisyenProfile", b =>
                 {
                     b.HasOne("DietApp.Data.DietUser", "User")
@@ -644,19 +732,30 @@ namespace DietApp.Migrations.Identity
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DietApp.Entities.PersonalInfo", b =>
+            modelBuilder.Entity("DietApp.Entities.PatientInfo", b =>
                 {
                     b.HasOne("DietApp.Entities.DiyetisyenProfile", "Diyetisyen")
                         .WithMany("Hastalar")
                         .HasForeignKey("DiyetisyenId");
 
                     b.HasOne("DietApp.Data.DietUser", "User")
-                        .WithOne("PersonalInfo")
-                        .HasForeignKey("DietApp.Entities.PersonalInfo", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Diyetisyen");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DietApp.Entities.PersonalInfo", b =>
+                {
+                    b.HasOne("DietApp.Data.DietUser", "User")
+                        .WithOne("PersonalInfo")
+                        .HasForeignKey("DietApp.Entities.PersonalInfo", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
