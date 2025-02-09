@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Get the connection string from appsettings.json
+// Get the connection string from appsettings.jsonn
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Register DataContext
