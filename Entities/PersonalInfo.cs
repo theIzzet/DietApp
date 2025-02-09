@@ -23,6 +23,13 @@ namespace DietApp.Entities
         public string? MaritalStatus { get; set; } // medeni durum
         public int? NumberOfChildren { get; set; }
 
+
+
+        // Diyetisyen ile iliþki
+        [ForeignKey(nameof(DiyetisyenProfile))]
+        public int? DiyetisyenId { get; set; } // Hastanýn hangi diyetisyene ait olduðunu belirten yabancý anahtar
+        public DiyetisyenProfile? Diyetisyen { get; set; } // Navigation Property
+
         //[ForeignKey(nameof(UserId))]
         public DietUser? User { get; set; }
     }

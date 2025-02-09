@@ -1,0 +1,217 @@
+﻿@model DietApp.Entities.DiyetisyenProfile
+
+@{
+    ViewData["Title"] = "Profilimi Düzenle";
+}
+
+<style>
+    /* Genel Sayfa Stili */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Profil Düzenleme Kapsayıcı */
+    .edit-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-title {
+        text-align: center;
+        color: #2E7D32;
+    }
+
+    /* Form Elemanları */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .btn-success {
+        background-color: #4CAF50;
+        border: none;
+        padding: 12px;
+        width: 100%;
+        font-size: 18px;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-success:hover {
+            background-color: #2E7D32;
+        }
+
+    .profile-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 2px solid #4CAF50;
+        object-fit: cover;
+    }
+
+    /* Bölüm Başlıkları */
+    .section-title {
+        font-size: 20px;
+        border-bottom: 2px solid #4CAF50;
+        padding-bottom: 5px;
+        color: #2E7D32;
+        margin-top: 20px;
+    }
+
+    /* Liste Stilleri */
+    .list-group {
+        list-style: none;
+        padding: 0;
+    }
+
+    .list-group-item {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+    .btn-danger {
+        background-color: #d9534f;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-danger:hover {
+            background-color: #c9302c;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        font-size: 16px;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+</style>
+
+<div class="edit-container">
+    <h2 class="edit-title">Profilimi Düzenle</h2>
+
+    <!-- PROFİL GÜNCELLEME FORMU -->
+    <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Hakkımda:</label>
+            <textarea name="about" class="form-control" rows="3">@Model.About</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Profil Resmi:</label>
+            <input type="file" name="profilePicture" class="form-control">
+            @if (!string.IsNullOrEmpty(Model.ProfilePicturePath))
+            {
+                <div class="mt-2 text-center">
+                    <img src="@Model.ProfilePicturePath" class="profile-image">
+                </div>
+            }
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn-success">Kaydet</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <!-- SERTİFİKA YÜKLEME FORMU -->
+    <h4 class="section-title">Mevcut Sertifikalar</h4>
+    @if (Model.Certificates != null && Model.Certificates.Any())
+    {
+        <ul class="list-group">
+            @foreach (var cert in Model.Certificates)
+            {
+                <li class="list-group-item">
+                    <a href="@cert.FilePath" target="_blank">📜 Sertifika</a>
+                    <form asp-action="DeleteCertificate" method="post">
+                        <input type="hidden" name="id" value="@cert.Id">
+                        <button type="submit" class="btn-danger">Sil</button>
+                    </form>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">Henüz sertifika eklenmedi.</p>
+    }
+
+    <form asp-action="UploadCertificates" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Yeni Sertifika Yükle:</label>
+            <input type="file" name="certificates" multiple class="form-control">
+        </div>
+        <button type="submit" class="btn-primary">Yükle</button>
+    </form>
+
+    <hr>
+
+    <!-- DENEYİM EKLEME FORMU -->
+    <h4 class="section-title">Deneyimlerim</h4>
+    @if (Model.Experiences != null && Model.Experiences.Any())
+    {
+        <ul class="list-group">
+            @foreach (var exp in Model.Experiences)
+            {
+                <li class="list-group-item">
+                    📝 @exp.Description
+                    <form asp-action="DeleteExperience" method="post">
+                        <input type="hidden" name="id" value="@exp.Id">
+                        <button type="submit" class="btn-danger">Sil</button>
+                    </form>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">Henüz deneyim eklenmedi.</p>
+    }
+
+    <form asp-action="AddExperience" method="post">
+        <div class="form-group">
+            <label>Yeni Deneyim Ekle:</label>
+            <input type="text" name="description" class="form-control" placeholder="Deneyiminizi girin">
+        </div>
+        <button type="submit" class="btn-primary">Ekle</button>
+    </form>
+</div>

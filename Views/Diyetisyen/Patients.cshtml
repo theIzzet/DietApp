@@ -1,0 +1,80 @@
+﻿@model IEnumerable<DietApp.Entities.PersonalInfo>
+
+@{
+    ViewData["Title"] = "Hastalarım";
+}
+
+<style>
+    .patients-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .patient-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        font-size: 18px;
+    }
+
+    .patient-name {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .btn-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    .list-btn, .view-btn {
+        background: #ff9800;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .view-btn {
+        background: #4CAF50;
+    }
+
+    .list-btn:hover {
+        background: #e68900;
+    }
+
+    .view-btn:hover {
+        background: #2E7D32;
+    }
+</style>
+
+<div class="patients-container">
+    <h2>Hastalarım</h2>
+    <hr />
+    @if (Model.Any())
+    {
+        @foreach (var patient in Model)
+        {
+            <div class="patient-card">
+                <span class="patient-name">@patient.Name @patient.SurName</span>
+                <div class="btn-container">
+                    <a asp-action="CreateDietList" asp-route-patientId="@patient.Id" class="list-btn">📋 Liste Oluştur</a>
+                    <a asp-action="ViewDietList" asp-route-patientId="@patient.Id" class="view-btn">👁 Liste Görüntüle</a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Henüz hastanız yok.</p>
+    }
+</div>

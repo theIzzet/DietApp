@@ -3,6 +3,7 @@ using System;
 using DietApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietApp.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20250207194318_AddDiyetisyenProfileTables")]
+    partial class AddDiyetisyenProfileTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -145,29 +148,6 @@ namespace DietApp.Migrations.Identity
                     b.HasIndex("UserId");
 
                     b.ToTable("Certificates");
-                });
-
-            modelBuilder.Entity("DietApp.Entities.DietList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("PersonalInfoId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonalInfoId");
-
-                    b.ToTable("DietLists");
                 });
 
             modelBuilder.Entity("DietApp.Entities.DiyetisyenProfile", b =>
@@ -378,9 +358,6 @@ namespace DietApp.Migrations.Identity
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("DiyetisyenId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Gender")
                         .HasColumnType("TEXT");
 
@@ -410,8 +387,6 @@ namespace DietApp.Migrations.Identity
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DiyetisyenId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -563,17 +538,6 @@ namespace DietApp.Migrations.Identity
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DietApp.Entities.DietList", b =>
-                {
-                    b.HasOne("DietApp.Entities.PersonalInfo", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PersonalInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("DietApp.Entities.DiyetisyenProfile", b =>
                 {
                     b.HasOne("DietApp.Data.DietUser", "User")
@@ -646,17 +610,11 @@ namespace DietApp.Migrations.Identity
 
             modelBuilder.Entity("DietApp.Entities.PersonalInfo", b =>
                 {
-                    b.HasOne("DietApp.Entities.DiyetisyenProfile", "Diyetisyen")
-                        .WithMany("Hastalar")
-                        .HasForeignKey("DiyetisyenId");
-
                     b.HasOne("DietApp.Data.DietUser", "User")
                         .WithOne("PersonalInfo")
                         .HasForeignKey("DietApp.Entities.PersonalInfo", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Diyetisyen");
 
                     b.Navigation("User");
                 });
@@ -743,8 +701,6 @@ namespace DietApp.Migrations.Identity
                     b.Navigation("Certificates");
 
                     b.Navigation("Experiences");
-
-                    b.Navigation("Hastalar");
                 });
 #pragma warning restore 612, 618
         }
