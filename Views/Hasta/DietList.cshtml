@@ -1,0 +1,33 @@
+﻿@model DietApp.Entities.DietList
+
+@{
+    ViewData["Title"] = "Diyet Listem";
+}
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h4><i class="bi bi-file-earmark-text me-2"></i>Diyet Listesi</h4>
+        </div>
+        <div class="card-body">
+            @if (Model == null)
+            {
+                <div class="alert alert-warning text-center">
+                    <i class="bi bi-exclamation-circle me-2"></i><strong>Henüz bir diyet listesi oluşturulmamış.</strong>
+                </div>
+            }
+            else
+            {
+                <div class="mb-3">
+                    <label class="form-label"><strong>📝 Diyet Açıklaması:</strong></label>
+                    <textarea class="form-control" rows="8" readonly>@Model.Description</textarea>
+                </div>
+                <p class="text-muted text-end">
+                    <small><i class="bi bi-calendar-check me-2"></i>Oluşturulma Tarihi: @Model.CreatedAt.ToString("dd MMM yyyy HH:mm")</small>
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
