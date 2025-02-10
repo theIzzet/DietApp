@@ -65,8 +65,175 @@ namespace DietApp.Controllers
 
            
 
-            return View(dietList); // Pass the diet list to the view
+            return View(dietList); 
         }
+
+        // Diğer aksiyonlarınızın altında ekleyebilirsiniz.
+        [Authorize(Roles = "Hasta")]
+        public IActionResult Measurements()
+        {
+            return View();
+        }
+
+
+        // Kilo Ölçüm formunu göster
+        public IActionResult WeightMeasurement()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> WeightMeasurement(WeightMeasurementViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var userId = _userManager.GetUserId(User);
+            var personalInfo = await _dataContext.PersonalInfos.FirstOrDefaultAsync(p => p.UserId == userId);
+            if (personalInfo == null)
+            {
+                return NotFound("Hasta bilgileri bulunamadı.");
+            }
+
+            var weightMeasurement = new WeightMeasurement
+            {
+                PersonalInfoId = personalInfo.Id,
+                MeasurementDate = DateTime.Now,
+                Weight = model.Weight,
+                PhotoPath = SaveUploadedFile(model.Photo)
+            };
+
+            _dataContext.WeightMeasurements.Add(weightMeasurement);
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToAction("MeasurementHistory");
+        }
+        // Vücut Ölçüm formunu göster
+        public IActionResult BodyMeasurement()
+        {
+            return View();
+        }
+         
+        [HttpPost]
+        public async Task<IActionResult> BodyMeasurement(BodyMeasurementViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var userId = _userManager.GetUserId(User);
+            var personalInfo = await _dataContext.PersonalInfos.FirstOrDefaultAsync(p => p.UserId == userId);
+            if (personalInfo == null)
+            {
+                return NotFound("Hasta bilgileri bulunamadı.");
+            }
+
+            var bodyMeasurement = new BodyMeasurement
+            {
+                PersonalInfoId = personalInfo.Id,
+                MeasurementDate = DateTime.Now,
+                Waist = model.Waist,
+                Hips = model.Hips,
+                Chest = model.Chest,
+                UpperArm = model.UpperArm,
+                Leg = model.Leg,
+                Neck = model.Neck,
+                PhotoPath = SaveUploadedFile(model.Photo)
+            };
+
+            _dataContext.BodyMeasurements.Add(bodyMeasurement);
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToAction("MeasurementHistory");
+        }
+        // Kayıtlı kilo ve vücut ölçümlerini gösteren sayfa
+        public async Task<IActionResult> MeasurementHistory()
+        {
+            var userId = _userManager.GetUserId(User);
+            var personalInfo = await _dataContext.PersonalInfos.FirstOrDefaultAsync(p => p.UserId == userId);
+            if (personalInfo == null)
+            {
+                return NotFound("Hasta bilgileri bulunamadı.");
+            }
+
+            var weightMeasurements = await _dataContext.WeightMeasurements
+                .Where(w => w.PersonalInfoId == personalInfo.Id)
+                .OrderBy(w => w.MeasurementDate)
+                .ToListAsync();
+
+            var bodyMeasurements = await _dataContext.BodyMeasurements
+                .Where(b => b.PersonalInfoId == personalInfo.Id)
+                .OrderBy(b => b.MeasurementDate)
+                .ToListAsync();
+
+            var model = new MeasurementHistoryViewModel
+            {
+                WeightMeasurements = weightMeasurements,
+                BodyMeasurements = bodyMeasurements
+            };
+
+            return View(model);
+        }
+
+        // “Ölçüm Yapılamadı” formunu göster (measurementType: "Weight" veya "Body")
+        public IActionResult ReportMeasurementIssue(string measurementType)
+        {
+            var model = new MeasurementIssueViewModel
+            {
+                MeasurementType = measurementType
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReportMeasurementIssue(MeasurementIssueViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var userId = _userManager.GetUserId(User);
+            var personalInfo = await _dataContext.PersonalInfos.FirstOrDefaultAsync(p => p.UserId == userId);
+            if (personalInfo == null)
+            {
+                return NotFound("Hasta bilgileri bulunamadı.");
+            }
+
+            var issueReport = new MeasurementIssueReport
+            {
+                PersonalInfoId = personalInfo.Id,
+                ReportDate = DateTime.Now,
+                MeasurementType = model.MeasurementType,
+                Reason = model.Reason,
+                ApprovedByDietitian = false
+            };
+
+            _dataContext.MeasurementIssueReports.Add(issueReport);
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToAction("MeasurementHistory");
+        }
+        // Yüklenen dosyayı wwwroot/uploads klasörüne kaydeder ve dosya yolunu döner.
+        private string? SaveUploadedFile(IFormFile? file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                return "/uploads/" + uniqueFileName;
+            }
+            return null;
+        } 
 
     }
 }

@@ -20,8 +20,11 @@ namespace DietApp.Data
         public DbSet<Certificate> Certificates => Set<Certificate>();
         public DbSet<Experience> Experiences => Set<Experience>();
         public DbSet<DietList> DietLists => Set<DietList>();
+        public DbSet<BodyMeasurement> BodyMeasurements => Set<BodyMeasurement>();
+        public DbSet<MeasurementIssueReport> MeasurementIssueReports => Set<MeasurementIssueReport>();
+        public DbSet<WeightMeasurement> WeightMeasurements => Set<WeightMeasurement>();
 
-    
+
 
     }
-    }
+}

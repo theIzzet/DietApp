@@ -1,0 +1,45 @@
+﻿@model DietApp.Models.MeasurementIssueViewModel
+
+@{
+    ViewBag.Title = "Ölçüm Yapılamadı Bildirimi";
+    Layout = "~/Views/Shared/_HastaLayout.cshtml";
+}
+
+<!-- Eğer uygulamanızda zaten Font Awesome dahil değilse, aşağıdaki satırı ekleyin -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dNrF2syvwYRGWPePLMSIgxVNe1H1bEep9YpU7aNqgK7w4yX1oV9eScK7qZszI5Z8Kf9JtF7P+zvx6bTqOWa3Gw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Ölçüm Yapılamadı Bildirimi (@Model.MeasurementType)
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="ReportMeasurementIssue" method="post">
+                        <input type="hidden" asp-for="MeasurementType" />
+                        <div class="form-group">
+                            <label asp-for="Reason">
+                                <i class="far fa-comment-dots"></i> Bildirim Sebebi:
+                            </label>
+                            <textarea asp-for="Reason" class="form-control" rows="5" placeholder="Lütfen ölçüm yapılamama sebebini detaylandırın..."></textarea>
+                            <span asp-validation-for="Reason" class="text-danger"></span>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-paper-plane"></i> Gönder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <small>İletişiminiz için teşekkürler! <span style="font-size:1.2rem;">😊👍</span></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,128 @@
+﻿@model DietApp.Models.BodyMeasurementViewModel
+@{
+    ViewBag.Title = "Vücut Ölçümleri";
+    Layout = "~/Views/Shared/_HastaLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">
+                <!-- Eğer FontAwesome kullanıyorsanız: -->
+                <i class="fas fa-ruler-horizontal"></i> Vücut Ölçümleri
+                <!-- Alternatif olarak emojiler: -->
+                <!-- 📝 Vücut Ölçümleri -->
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="mb-4">
+                <h3>
+                    <i class="fas fa-info-circle"></i> Nasıl Ölçüm Yapılır?
+                    <!-- Alternatif emoji: ❗ -->
+                </h3>
+                <p>Aşağıdaki ölçümleri doğru şekilde alabilmeniz için talimatlar:</p>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>Bel:</strong> Bel çevrenizi ölçünüz. Ölçüm cihazınızın doğru konumda olduğundan emin olun. ⚖️
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Kalça:</strong> En geniş noktasından ölçünüz. 🍑
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Göğüs:</strong> Göğüs çevrenizi tam ortadan ölçünüz. 💪
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Üst Kol:</strong> Kolunuzun en geniş kısmını ölçünüz. 💪
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Bacak:</strong> Uyluk çevresini ölçünüz. 🦵
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Boyun:</strong> Boyun çevrenizi ölçünüz. 🧣
+                    </li>
+                </ul>
+                <div class="mt-3 text-center">
+                    <img src="/images/vucut_olcum.jpg" alt="Vücut Ölçümleri" class="img-fluid rounded" style="max-width:300px;" />
+                </div>
+                <div class="mt-3 text-center">
+                    <video width="320" height="240" controls class="rounded shadow-sm">
+                        <source src="/video/vucut_olcum.mp4" type="video/mp4">
+                        Tarayıcınız video elementini desteklemiyor.
+                    </video>
+                </div>
+            </div>
+
+            <form asp-controller="Hasta" asp-action="BodyMeasurement" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Waist" class="form-label">
+                            <i class="fas fa-arrows-alt-h"></i> Bel
+                        </label>
+                        <input asp-for="Waist" class="form-control" placeholder="Örn: 80" />
+                        <span asp-validation-for="Waist" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Hips" class="form-label">
+                            <i class="fas fa-arrows-alt-h"></i> Kalça
+                        </label>
+                        <input asp-for="Hips" class="form-control" placeholder="Örn: 95" />
+                        <span asp-validation-for="Hips" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Chest" class="form-label">
+                            <i class="fas fa-arrows-alt-h"></i> Göğüs
+                        </label>
+                        <input asp-for="Chest" class="form-control" placeholder="Örn: 90" />
+                        <span asp-validation-for="Chest" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="UpperArm" class="form-label">
+                            <i class="fas fa-arrows-alt-h"></i> Üst Kol
+                        </label>
+                        <input asp-for="UpperArm" class="form-control" placeholder="Örn: 30" />
+                        <span asp-validation-for="UpperArm" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Leg" class="form-label">
+                            <i class="fas fa-arrows-alt-h"></i> Bacak
+                        </label>
+                        <input asp-for="Leg" class="form-control" placeholder="Örn: 55" />
+                        <span asp-validation-for="Leg" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Neck" class="form-label">
+                            <i class="fas fa-arrows-alt-h"></i> Boyun
+                        </label>
+                        <input asp-for="Neck" class="form-control" placeholder="Örn: 35" />
+                        <span asp-validation-for="Neck" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        <i class="fas fa-camera"></i> Ölçüm Fotoğrafı (isteğe bağlı):
+                    </label>
+                    <input type="file" name="Photo" class="form-control-file" />
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Ölçümü Kaydet
+                </button>
+            </form>
+
+            <hr />
+            <p class="mt-3">
+                Ölçüm yapamadıysanız, lütfen
+                <a asp-action="ReportMeasurementIssue" asp-route-measurementType="Body" class="text-primary fw-bold">
+                    buraya tıklayınız
+                </a>.
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
