@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Ölçümler";
+    Layout = "~/Views/Shared/_HastaLayout.cshtml";
+}
+
+<div class="container my-5">
+    <!-- Başlık ve açıklama -->
+    <div class="text-center mb-5">
+        <h2>Ölçümler <span class="fs-3">✨</span></h2>
+        <p class="text-muted">Ölçümlerinizi kolayca takip edin, kaydedin ve geçmişe dönüp inceleyin.</p>
+    </div>
+
+    <!-- Kartlarla ölçüm seçenekleri -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <!-- Kilo Ölçümü Kartı -->
+        <div class="col">
+            <div class="card border-0 shadow-sm hover-scale">
+                <div class="card-body text-center">
+                    <div class="mb-3" style="font-size: 2.5rem;">🏋️‍♂️</div>
+                    <h5 class="card-title">Kilo Ölçümü</h5>
+                    <p class="card-text">Kilonuzu takip edin ve sağlığınıza odaklanın.</p>
+                    <a asp-action="WeightMeasurement" class="btn btn-primary">Ölçüm Yap</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vücut Ölçümleri Kartı -->
+        <div class="col">
+            <div class="card border-0 shadow-sm hover-scale">
+                <div class="card-body text-center">
+                    <div class="mb-3" style="font-size: 2.5rem;">📏</div>
+                    <h5 class="card-title">Vücut Ölçümleri</h5>
+                    <p class="card-text">Vücut ölçümlerinizi kaydedin ve analiz edin.</p>
+                    <a asp-action="BodyMeasurement" class="btn btn-success">Detayları Gör</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ölçüm Geçmişi Kartı -->
+        <div class="col">
+            <div class="card border-0 shadow-sm hover-scale">
+                <div class="card-body text-center">
+                    <div class="mb-3" style="font-size: 2.5rem;">⏰</div>
+                    <h5 class="card-title">Ölçüm Geçmişi</h5>
+                    <p class="card-text">Geçmiş ölçümlerinizi inceleyerek gelişiminizi görün.</p>
+                    <a asp-action="MeasurementHistory" class="btn btn-warning">İncele</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ölçüm Yapılamadı Bildirimi Kartı -->
+        <div class="col">
+            <div class="card border-0 shadow-sm hover-scale">
+                <div class="card-body text-center">
+                    <div class="mb-3" style="font-size: 2.5rem;">🚨</div>
+                    <h5 class="card-title">Ölçüm Yapılamadı</h5>
+                    <p class="card-text">Bir aksaklık mı var? Bildirerek yardım isteyin.</p>
+                    <a asp-action="ReportMeasurementIssue" asp-route-measurementType="Genel" class="btn btn-danger">Bildir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hover efektleri için özel stil -->
+<style>
+    .hover-scale {
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+</style>

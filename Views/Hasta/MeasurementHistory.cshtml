@@ -1,0 +1,125 @@
+﻿@model DietApp.Models.MeasurementHistoryViewModel
+@{
+    ViewBag.Title = "Ölçüm Geçmişi";
+    Layout = "~/Views/Shared/_HastaLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2>Ölçüm Geçmişi</h2>
+        <hr />
+    </div>
+
+    <!-- Kilo Ölçümleri Kartı -->
+    <div class="card mb-4 shadow">
+        <div class="card-header bg-primary text-white">
+            <h3>
+                <!-- Eğer FontAwesome yüklüyse ikonlar görünecektir -->
+                <i class="fas fa-weight"></i> Kilo Ölçümleri ⚖️
+            </h3>
+        </div>
+        <div class="card-body">
+            @if (Model.WeightMeasurements != null && Model.WeightMeasurements.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Kilo (kg)</th>
+                                <th>Fotoğraf</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.WeightMeasurements)
+                            {
+                                <tr>
+                                    <td>@item.MeasurementDate.ToShortDateString()</td>
+                                    <td>@item.Weight</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.PhotoPath))
+                                        {
+                                            <img src="@item.PhotoPath" alt="Kilo Fotoğraf" class="img-thumbnail" style="max-width:100px;" />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info" role="alert">
+                    Henüz kilo ölçümü kaydedilmemiş. <span style="font-size:1.5em;">😕</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Vücut Ölçümleri Kartı -->
+    <div class="card mb-4 shadow">
+        <div class="card-header bg-success text-white">
+            <h3>
+                <i class="fas fa-ruler-combined"></i> Vücut Ölçümleri 📏
+            </h3>
+        </div>
+        <div class="card-body">
+            @if (Model.BodyMeasurements != null && Model.BodyMeasurements.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Bel (cm)</th>
+                                <th>Kalça (cm)</th>
+                                <th>Göğüs (cm)</th>
+                                <th>Üst Kol (cm)</th>
+                                <th>Bacak (cm)</th>
+                                <th>Boyun (cm)</th>
+                                <th>Fotoğraf</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BodyMeasurements)
+                            {
+                                <tr>
+                                    <td>@item.MeasurementDate.ToShortDateString()</td>
+                                    <td>@item.Waist</td>
+                                    <td>@item.Hips</td>
+                                    <td>@item.Chest</td>
+                                    <td>@item.UpperArm</td>
+                                    <td>@item.Leg</td>
+                                    <td>@item.Neck</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.PhotoPath))
+                                        {
+                                            <img src="@item.PhotoPath" alt="Vücut Fotoğraf" class="img-thumbnail" style="max-width:100px;" />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info" role="alert">
+                    Henüz vücut ölçümü kaydedilmemiş. <span style="font-size:1.5em;">😕</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Yeni Ölçüm Ekleme Düğmeleri -->
+    <div class="text-center mb-5">
+        <a asp-action="WeightMeasurement" class="btn btn-outline-primary btn-lg mx-2">
+            <i class="fas fa-plus-circle"></i> Yeni Kilo Ölçümü Ekle
+        </a>
+        <a asp-action="BodyMeasurement" class="btn btn-outline-success btn-lg mx-2">
+            <i class="fas fa-plus-circle"></i> Yeni Vücut Ölçümü Ekle
+        </a>
+    </div>
+</div>

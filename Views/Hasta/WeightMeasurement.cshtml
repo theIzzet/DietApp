@@ -1,0 +1,69 @@
+﻿@model DietApp.Models.WeightMeasurementViewModel
+@{
+    ViewBag.Title = "Kilo Ölçümü";
+    Layout = "~/Views/Shared/_HastaLayout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-weight"></i> Kilo Ölçümü ⚖️</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h4><i class="fas fa-info-circle"></i> Doğru Kilo Ölçümü Nasıl Yapılır? 📏</h4>
+                        <p class="lead">Lütfen ölçüm yapmadan önce aşağıdaki talimatları okuyunuz:</p>
+                        <ul class="list-unstyled">
+                            <li>👉 Ölçümden önce tartıya çıkmadan uygun şekilde hazırlanınız.</li>
+                            <li>👉 Ölçüm, sabah aç karnına ve aynı saatte yapılmalıdır.</li>
+                            <li>👉 Tartı cihazınız dijital ise, cihazın kalibrasyonunu kontrol ediniz.</li>
+                        </ul>
+                        <div class="text-center my-3">
+                            <img src="/images/kilo_olcum.jpg" alt="Kilo Ölçümü" class="img-fluid rounded" style="max-width:300px;">
+                        </div>
+                        <div class="text-center">
+                            <audio controls>
+                                <source src="/audio/kilo_olcum.mp3" type="audio/mpeg">
+                                Tarayıcınız audio elementini desteklemiyor.
+                            </audio>
+                        </div>
+                    </div>
+                    <form asp-controller="Hasta" asp-action="WeightMeasurement" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="Weight"><i class="fas fa-balance-scale"></i> Kilonuz</label>
+                            <input asp-for="Weight" class="form-control" placeholder="Örnek: 75.5" />
+                            <span asp-validation-for="Weight" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-camera"></i> Ölçüm Fotoğrafı (isteğe bağlı):</label>
+                            <input type="file" name="Photo" class="form-control-file" />
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block mt-3">
+                            <i class="fas fa-save"></i> Ölçümü Kaydet
+                        </button>
+                    </form>
+                    <hr />
+                    <div class="text-center">
+                        <p>
+                            Ölçüm yapamadıysanız, lütfen
+                            <a asp-action="ReportMeasurementIssue"
+                               asp-controller="Hasta"
+                               asp-route-measurementType="Weight"
+                               class="font-weight-bold text-danger">
+                                buraya tıklayınız 😟
+                            </a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
