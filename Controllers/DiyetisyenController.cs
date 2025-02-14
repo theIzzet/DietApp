@@ -53,20 +53,33 @@ namespace DietApp.Controllers
             var profile = await _context.DiyetisyenProfiles
                 .Include(p => p.Certificates)
                 .Include(p => p.Experiences)
+                .Include(p => p.DietTypes) // DietTypes da dahil ediliyor
                 .FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (profile == null) return NotFound();
+            //var dietTypes = _context.DietTypes.ToList();
+
+            //ViewBag.DietTypes = dietTypes
+            //    .GroupBy(d => d.Title)
+            //    .Select(g => new { GroupName = g.Key, Diets = g.ToList() })
+            //    .ToList();
+
+
+
+            ViewBag.DietTypes = await _context.DietTypes.ToListAsync();
 
             return View(profile);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProfile(string? about, IFormFile? profilePicture)
+        public async Task<IActionResult> EditProfile(string? about, IFormFile? profilePicture, int[] selectedDietTypes)
         {
             var userId = _userManager.GetUserId(User);
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
-            var profile = await _context.DiyetisyenProfiles.FirstOrDefaultAsync(p => p.UserId == userId);
+            var profile = await _context.DiyetisyenProfiles.Include(p => p.DietTypes)
+                .FirstOrDefaultAsync(p => p.UserId == userId)
+                ;
             if (profile == null) return NotFound();
 
             if (!string.IsNullOrEmpty(about)) profile.About = about;
@@ -83,6 +96,37 @@ namespace DietApp.Controllers
                     await profilePicture.CopyToAsync(stream);
                 }
                 profile.ProfilePicturePath = "/uploads/profile_pics/" + uniqueFileName;
+            }
+
+
+            //if (selectedDietTypes != null && selectedDietTypes.Length > 0)
+            //{
+            //    var selectedDiets = await _context.DietTypes
+            //        .Where(d => selectedDietTypes.Contains(d.Id))
+            //        .ToListAsync();
+
+            //    profile.DietTypes = selectedDiets;
+            //}
+
+
+            profile.DietTypes.Clear();
+            if (selectedDietTypes != null && selectedDietTypes.Length > 0)
+            {
+                var selectedDiets = await _context.DietTypes.Where(d => selectedDietTypes.Contains(d.Id)).ToListAsync();
+                foreach (var diet in selectedDiets)
+                {
+                    profile.DietTypes.Add(diet);
+                }
+            }
+
+            profile.DietTypes.Clear();
+            if (selectedDietTypes != null && selectedDietTypes.Length > 0)
+            {
+                var selectedDiets = await _context.DietTypes.Where(d => selectedDietTypes.Contains(d.Id)).ToListAsync();
+                foreach (var diet in selectedDiets)
+                {
+                    profile.DietTypes.Add(diet);
+                }
             }
 
             await _context.SaveChangesAsync();

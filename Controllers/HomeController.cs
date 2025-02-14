@@ -25,9 +25,14 @@ namespace DietApp.Controllers
             _dataContext = dataContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult>  Index()
         {
-            return View();
+            var dietTypes = await _dataContext.DietTypes
+                .Include(dt => dt.DiyetisyenProfiles)
+                .ThenInclude(dp => dp.User)
+                .ToListAsync();
+            return View(dietTypes);
+            
         }
 
         public IActionResult Privacy()
@@ -41,8 +46,7 @@ namespace DietApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        // Hasta Page
-        //[Authorize(Roles = "Hasta")]
+        
         public async Task<IActionResult> HastaPage()
         {
             // Oturumdaki kullanıcı ID'sini al
@@ -63,7 +67,7 @@ namespace DietApp.Controllers
         }
 
         [Authorize(Roles = "Hasta")]
-        // HastaBilgilerim - GET
+        
         [HttpGet]
         public async Task<IActionResult> HastaBilgilerim()
         {
