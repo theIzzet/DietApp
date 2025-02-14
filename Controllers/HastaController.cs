@@ -6,10 +6,10 @@ using DietApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace DietApp.Controllers
 {
@@ -28,16 +28,107 @@ namespace DietApp.Controllers
             _dataContext = dataContext;
         }
 
-        public IActionResult Hizmetler()
+       
+
+        public async Task<IActionResult> Hizmetler(int? id)
         {
-            // "Views/Hasta/Hizmetler.cshtml" arar
-            return View("Hizmetler");
+            if (id == null)
+            {
+                
+                var allDoktorlar = await _dataContext.DiyetisyenProfiles
+                    .Include(d => d.User)
+                    .ToListAsync();
+
+                if (allDoktorlar == null || !allDoktorlar.Any())
+                {
+                    ViewBag.Message = "Henüz listelenecek diyetisyen yok.";
+                }
+
+                return View(allDoktorlar);
+            }
+
+         
+            var dietType = await _dataContext.DietTypes
+                .Include(dt => dt.DiyetisyenProfiles)
+                .ThenInclude(dp => dp.User)
+                .FirstOrDefaultAsync(dt => dt.Id == id);
+
+            if (dietType == null)
+            {
+                ViewBag.Message = "Belirtilen diyet türü bulunamadı.";
+                return View(new List<DiyetisyenProfile>());
+            }
+
+           
+            ViewBag.DietTypeTitle = dietType.Title;
+            ViewBag.DietTypeDescription = dietType.Description;
+
+            return View(dietType.DiyetisyenProfiles);
         }
-        public IActionResult DoktorlarSayfa()
+
+        public async Task<IActionResult> DoktorlarSayfa(string id)
         {
-            // "Views/Hasta/Hizmetler.cshtml" arar
-            return View("DoktorlarSayfa");
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound("Doktor bulunamadı.");
+            }
+
+            var doktor = await _dataContext.DiyetisyenProfiles
+                                           .Include(d => d.User)
+                                           .Include(d => d.Comments)
+                                           .ThenInclude(d =>d.User)
+                                           .FirstOrDefaultAsync(d => d.UserId == id);
+
+            if (doktor == null)
+            {
+                return NotFound("Doktor profili bulunamadı.");
+            }
+
+            return View(doktor);
         }
+
+        
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddComment(CommentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return Unauthorized();
+                }
+
+                var diyetisyen = await _dataContext.DiyetisyenProfiles.FindAsync(model.DietisyenProfileId);
+                if (diyetisyen == null)
+                {
+                    return NotFound("Böyle bir diyetisyen profili bulunamadı.");
+                }
+
+                var comment = new Comment
+                {
+                    CommentText = model.CommentText,
+                    PublishedOn = DateTime.Now,
+                    UserId = user.Id,
+                    DPId = model.DietisyenProfileId,
+                    Rating = model.Rating
+                };
+
+                _dataContext.Comments.Add(comment);
+                await _dataContext.SaveChangesAsync();
+
+                // Doğru ID'yi kullanarak yönlendirme yap
+                return RedirectToAction("DoktorlarSayfa", new { id = diyetisyen.UserId });
+            }
+
+            return BadRequest("Geçersiz veri");
+        }
+
+
+
         [Authorize(Roles = "Hasta")]
         public async Task<IActionResult> DietList()
         {

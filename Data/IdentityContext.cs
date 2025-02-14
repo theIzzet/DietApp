@@ -23,7 +23,9 @@ namespace DietApp.Data
         public DbSet<BodyMeasurement> BodyMeasurements => Set<BodyMeasurement>();
         public DbSet<MeasurementIssueReport> MeasurementIssueReports => Set<MeasurementIssueReport>();
         public DbSet<WeightMeasurement> WeightMeasurements => Set<WeightMeasurement>();
+        public DbSet<Comment> Comments => Set<Comment>();
 
+        public DbSet<DietType> DietTypes => Set<DietType>();
 
 
     }

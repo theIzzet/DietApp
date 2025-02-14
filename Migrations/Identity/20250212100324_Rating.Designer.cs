@@ -3,6 +3,7 @@ using System;
 using DietApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietApp.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20250212100324_Rating")]
+    partial class Rating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -239,29 +242,6 @@ namespace DietApp.Migrations.Identity
                     b.HasIndex("PersonalInfoId");
 
                     b.ToTable("DietLists");
-                });
-
-            modelBuilder.Entity("DietApp.Entities.DietType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("About")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PicturePath")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DietTypes");
                 });
 
             modelBuilder.Entity("DietApp.Entities.DiyetisyenProfile", b =>
@@ -595,21 +575,6 @@ namespace DietApp.Migrations.Identity
                     b.ToTable("WeightMeasurements");
                 });
 
-            modelBuilder.Entity("DietTypeDiyetisyenProfile", b =>
-                {
-                    b.Property<int>("DietTypesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("DiyetisyenProfilesId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("DietTypesId", "DiyetisyenProfilesId");
-
-                    b.HasIndex("DiyetisyenProfilesId");
-
-                    b.ToTable("DietTypeDiyetisyenProfile");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -886,21 +851,6 @@ namespace DietApp.Migrations.Identity
                         .IsRequired();
 
                     b.Navigation("PersonalInfo");
-                });
-
-            modelBuilder.Entity("DietTypeDiyetisyenProfile", b =>
-                {
-                    b.HasOne("DietApp.Entities.DietType", null)
-                        .WithMany()
-                        .HasForeignKey("DietTypesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DietApp.Entities.DiyetisyenProfile", null)
-                        .WithMany()
-                        .HasForeignKey("DiyetisyenProfilesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

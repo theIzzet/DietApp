@@ -30,7 +30,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Login/Login";
     options.AccessDeniedPath = "/Login/Login";
     options.SlidingExpiration=true;
-    options.ExpireTimeSpan=TimeSpan.FromDays(14);
+    options.ExpireTimeSpan=TimeSpan.FromMinutes(5);
 });
 
 
@@ -40,6 +40,9 @@ using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<DietRole>>();
     await DataSeeder.SeedRoles(roleManager);
+
+    var context = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+    await DataSeeder.SeedDietTypes(context);
 }
 
 // Configure the HTTP request pipeline.
