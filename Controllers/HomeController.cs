@@ -61,9 +61,13 @@ namespace DietApp.Controllers
             {
                 return NotFound("Kullanıcı bulunamadı.");
             }
+            var dietTypes = await _dataContext.DietTypes
+                .Include(dt => dt.DiyetisyenProfiles)
+                .ThenInclude(dp => dp.User)
+                .ToListAsync();
 
             ViewBag.UserName = $"{user.Name} {user.SurName}";
-            return View();
+            return View(dietTypes);
         }
 
         [Authorize(Roles = "Hasta")]

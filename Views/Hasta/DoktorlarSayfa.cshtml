@@ -101,35 +101,38 @@
         <hr class="my-5">
     </div>
 
-
-
-
     <div class="card border-0 mt-3">
         <div class="card-header pb-0">
             <h4><span id="commentCount">@Model.Comments.Count()</span> kadar yorum.</h4>
         </div>
         <div class="card-body">
-            @foreach (var comment in Model.Comments)
+            @for (int i = 0; i < Model.Comments.Count(); i++)
             {
-                <div class="my-4 d-flex">
+                var comment = Model.Comments.ElementAt(i);
+                <div class="my-4 d-flex comment-item @(i >= 5 ? "d-none" : "")">
                     <div>
                         <div class="mb-2">
                             <h6>@comment.User.UserName</h6>
                             <span><i class="bi bi-calendar"></i> @comment.PublishedOn.ToShortDateString()</span>
                         </div>
                         @comment.CommentText
-                       <div class="stars">
-                @for (int i = 0; i < comment.Rating; i++)
-                {
-                    <span style="color: #FFD700;">★</span>
-                }
-                @for (int i = comment.Rating; i < 5; i++)
-                {
-                    <span style="color: #ccc;">★</span>
-                }
-            </div>
+                        <div class="stars">
+                            @for (int j = 0; j < comment.Rating; j++)
+                            {
+                                <span style="color: #FFD700;">★</span>
+                            }
+                            @for (int j = comment.Rating; j < 5; j++)
+                            {
+                                <span style="color: #ccc;">★</span>
+                            }
+                        </div>
                     </div>
                 </div>
+            }
+
+            @if (Model.Comments.Count() > 5)
+            {
+                <button id="viewMoreBtn" class="btn btn-secondary mt-3">Daha Fazla Gör</button>
             }
 
             <hr class="my-4" />
@@ -137,12 +140,11 @@
             <div>
                 <h4>Yorum Ekle</h4>
                 <form asp-action="AddComment" method="post">
-                    
-                    <input type="hidden" asp-for="UserId" name="DietisyenProfileId" value="@Model.Id"/>
+                    <input type="hidden" name="DietisyenProfileId" value="@Model.Id" />
 
                     <div class="mb-3">
                         <label for="CommentText" class="form-label">Yorum</label>
-                        <textarea asp-for="@Model.Comments.FirstOrDefault().CommentText" name="CommentText" class="form-control" id="CommentText" rows="3"></textarea>
+                        <textarea name="CommentText" class="form-control" id="CommentText" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Puan</label>
@@ -153,7 +155,7 @@
                             <span class="star" data-value="4">★</span>
                             <span class="star" data-value="5">★</span>
                         </div>
-                        <input type="hidden" name="Rating" id="Rating" value="5" /> <!-- Varsayılan 5 yıldız -->
+                        <input type="hidden" name="Rating" id="Rating" value="5" />
                     </div>
 
                     <div class="mb-3">
@@ -163,25 +165,32 @@
             </div>
         </div>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const stars = document.querySelectorAll(".star");
             const ratingInput = document.getElementById("Rating");
+            const viewMoreBtn = document.getElementById("viewMoreBtn");
 
             stars.forEach(star => {
                 star.addEventListener("click", function () {
                     const value = this.getAttribute("data-value");
                     ratingInput.value = value;
-
-                    
                     stars.forEach(s => s.style.color = "#ccc");
-
-                    
                     for (let i = 0; i < value; i++) {
                         stars[i].style.color = "#FFD700";
                     }
                 });
             });
+
+            if (viewMoreBtn) {
+                viewMoreBtn.addEventListener("click", function () {
+                    document.querySelectorAll(".comment-item.d-none").forEach(item => {
+                        item.classList.remove("d-none");
+                    });
+                    viewMoreBtn.style.display = "none";
+                });
+            }
         });
     </script>
 
@@ -200,6 +209,8 @@
                 color: #FFD700;
             }
     </style>
+
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
