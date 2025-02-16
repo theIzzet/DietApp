@@ -45,6 +45,7 @@ namespace DietApp.Controllers
             return View(profile);
         }
 
+
         public async Task<IActionResult> EditProfile()
         {
             var userId = _userManager.GetUserId(User);
@@ -53,16 +54,11 @@ namespace DietApp.Controllers
             var profile = await _context.DiyetisyenProfiles
                 .Include(p => p.Certificates)
                 .Include(p => p.Experiences)
-                .Include(p => p.DietTypes) // DietTypes da dahil ediliyor
+                .Include(p => p.DietTypes) 
                 .FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (profile == null) return NotFound();
-            //var dietTypes = _context.DietTypes.ToList();
-
-            //ViewBag.DietTypes = dietTypes
-            //    .GroupBy(d => d.Title)
-            //    .Select(g => new { GroupName = g.Key, Diets = g.ToList() })
-            //    .ToList();
+            
 
 
 
@@ -99,14 +95,6 @@ namespace DietApp.Controllers
             }
 
 
-            //if (selectedDietTypes != null && selectedDietTypes.Length > 0)
-            //{
-            //    var selectedDiets = await _context.DietTypes
-            //        .Where(d => selectedDietTypes.Contains(d.Id))
-            //        .ToListAsync();
-
-            //    profile.DietTypes = selectedDiets;
-            //}
 
 
             profile.DietTypes.Clear();

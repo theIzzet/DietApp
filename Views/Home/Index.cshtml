@@ -367,29 +367,7 @@
         </style>
 
 
-
-            @* <div class="row row-cols-1 row-cols-md-3 g-4">
-                @foreach (var diet in Model)
-                {
-                    <div class="col">
-                        <div class="card h-100 border-0 shadow hover-effect">
-                            <img src="@diet.PicturePath"
-                                 class="card-img-top"
-                                 alt="@diet.Title"
-                                 style="height: 180px; object-fit: cover;" />
-                            <div class="card-body">
-                                <h4 class="card-title fw-bold">@diet.Title</h4>
-                                <p class="card-text fs-5">@diet.Description</p>
-                            </div>
-                            <div class="card-footer border-0 bg-white text-end">
-                                <a asp-controller="Hasta" asp-action="Hizmetler" asp-route-id="@diet.Id" class="btn btn-primary btn-custom">
-                                    Daha Fazla Bilgi Al
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div> *@
+           
 
 
         <div class="row row-cols-1 row-cols-md-3 g-4">

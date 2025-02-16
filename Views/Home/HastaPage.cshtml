@@ -3,6 +3,8 @@
     ViewData["Title"] = "Hasta Page";
 
 }
+@model IEnumerable<DietApp.Entities.DietType>
+
 
 <!DOCTYPE html>
 <html lang="tr">
@@ -345,8 +347,10 @@
         </div>
     </div>
 
-    <!-- HİZMETLERİMİZ (Card Group) -->
-    <!-- HİZMETLERİMİZ (Card Group) -->
+   
+
+
+
     <div class="container py-5">
         <h2 class="text-center mb-4">Hizmetlerimiz</h2>
 
@@ -367,192 +371,45 @@
             }
         </style>
 
+
+
+
+
         <div class="row row-cols-1 row-cols-md-3 g-4">
-
-            <!-- 1. Kart: Obezite ve Kilo Kontrolü -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Obezite ve Kilo Kontrolü"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Obezite ve Kilo Kontrolü</h4>
-                        <p class="card-text fs-5">
-                            Obezite ve Kilo Kontrolü
-                        </p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. Kart: Hastalıklar ve Diyet -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Hastalıklar ve Diyet"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Hastalıklar ve Diyet</h4>
-                        <p class="card-text fs-5">
-                            Hastalıklarda Beslenme ve Diyet Tedavisi
-                        </p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
+            @foreach (var diet in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 border-0 shadow hover-effect">
+                        <img src="@diet.PicturePath"
+                             class="card-img-top"
+                             alt="@diet.Title"
+                             style="height: 180px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">@diet.Title</h4>
+                            <p class="card-text fs-5">@diet.Description</p>
+                            <h5>Bu Diyet Türünü Uygulayan Diyetisyenler:</h5>
+                            <ul>
+                                @foreach (var diyetisyen in diet.DiyetisyenProfiles)
+                                {
+                                    <li>
+                                        <a asp-controller="Hasta" asp-action="DoktorlarSayfa" asp-route-id="@diyetisyen.UserId">
+                                            @diyetisyen.User.Name @diyetisyen.User.SurName
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="card-footer border-0 bg-white text-end">
+                            <a asp-controller="Hasta" asp-action="Hizmetler" asp-route-id="@diet.Id" class="btn btn-primary btn-custom">
+                                Daha Fazla Bilgi Al
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- 3. Kart: Yeme Davranış Bozuklukları -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Yeme Davranış Bozukluklarında Beslenme"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Yeme Davranış Bozukluklarında Beslenme</h4>
-                        <p class="card-text fs-5">
-                            Yeme Davranış Bozukluklarında Beslenme
-                        </p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. Kart: Hamilelikte Beslenme ve Kilo Kontrolü -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Hamilelikte Beslenme ve Kilo Kontrolü"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Hamilelikte Beslenme ve Kilo Kontrolü</h4>
-                        <p class="card-text fs-5">
-                            Hamilelik Döneminde Beslenme ve Kilo Kontrolü
-                        </p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. Kart: Emziklik Dönemi Beslenme -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Emziklik Döneminde Beslenme ve Kilo Kontrolü"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Emziklik Dönemi Beslenme ve Diyet</h4>
-                        <p class="card-text fs-5">
-                            Emziklik Döneminde Beslenme ve Kilo Kontrolü
-                        </p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
-                    </div>
-                </div>
-            </div> 
-
-            <!-- 6. Kart: Beslenme ve Çocuk -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Beslenme ve Çocuk"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Beslenme ve Çocuk</h4>
-                        <p class="card-text fs-5">
-                            Okul Öncesi Dönem ve Adölesan Dönemde Beslenme
-                        </p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. Kart: Sporcu Beslenmesi -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Sporcu Beslenmesi"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Sporcu Beslenmesi</h4>
-                        <p class="card-text fs-5">Sporcu Beslenmesi</p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8. Kart: Online Diyet -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Online Diyet"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Online Diyet</h4>
-                        <p class="card-text fs-5">Online Diyet Hizmet</p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 9. Kart: Kurumsal Beslenme ve Danışmanlık -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow hover-effect">
-                    <img src="~/css/besbant.png"
-                         class="card-img-top"
-                         alt="Kurumsal Beslenme ve Danışmanlık"
-                         style="height: 180px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h4 class="card-title fw-bold">Kurumsal Beslenme ve Danışmanlık</h4>
-                        <p class="card-text fs-5">Kurumsal Beslenme Danışmanlığı</p>
-                    </div>
-                    <div class="card-footer border-0 bg-white text-end">
-                        <a asp-controller="Hasta" asp-action="Hizmetler" class="btn btn-primary btn-custom">
-                            Daha Fazla Bilgi Al
-                        </a>
-                    </div>
-                </div>
-            </div>
-
+            }
         </div>
+
+
     </div>
 
 
