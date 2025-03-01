@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using DietApp.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -24,10 +25,12 @@ namespace DietApp.Data
 
         public PastMedical? PastMedical { get; set; }
 
-        //public ICollection<Allergy> Allergies { get; set; } = new List<Allergy>();
-        //public ICollection<Disease> Diseases { get; set; } = new List<Disease>();
-        //public ICollection<FamilyDisease> FamilyDiseases { get; set; } = new List<FamilyDisease>();
-        //public ICollection<Medication> Medications { get; set; } = new List<Medication>();
+
+        [InverseProperty(nameof(Message.Sender))]
+        public ICollection <Message> SentMessages { get; set; }= new List<Message>();
+
+        [InverseProperty(nameof(Message.Receiver))]
+        public ICollection <Message> ReceivedMessages { get; set; } = new List<Message>();
 
     }
 }

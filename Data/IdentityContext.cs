@@ -27,6 +27,7 @@ namespace DietApp.Data
 
         public DbSet<DietType> DietTypes => Set<DietType>();
 
+        public DbSet<Message> Messages => Set<Message>();
 
     }
 }

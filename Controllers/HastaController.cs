@@ -32,6 +32,27 @@ namespace DietApp.Controllers
 
         public async Task<IActionResult> Hizmetler(int? id)
         {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+
+                var roles = await _userManager.GetRolesAsync(user);
+
+                
+                if (roles.Contains("Hasta"))
+                {
+                    ViewBag.Layout = "_HastaLayout";
+                }
+                else
+                {
+                    ViewBag.Layout = "_Layout";
+                }
+            }
+            else
+            {
+                ViewBag.Layout = "_Layout";
+            }
             if (id == null)
             {
                 
@@ -68,6 +89,27 @@ namespace DietApp.Controllers
 
         public async Task<IActionResult> DoktorlarSayfa(string id)
         {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                // Kullanıcının rollerini al
+                var roles = await _userManager.GetRolesAsync(user);
+
+                // Eğer kullanıcının rolü "Hasta" ise, özel layout'u kullanmasını sağla
+                if (roles.Contains("Hasta"))
+                {
+                    ViewBag.Layout = "_HastaLayout";
+                }
+                else
+                {
+                    ViewBag.Layout = "_Layout";
+                }
+            }
+            else
+            {
+                ViewBag.Layout = "_Layout";
+            }
             if (string.IsNullOrEmpty(id))
             {
                 return NotFound("Doktor bulunamadı.");
