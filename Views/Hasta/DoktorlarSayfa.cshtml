@@ -1,4 +1,6 @@
-﻿@model DietApp.Entities.DiyetisyenProfile
+﻿
+
+@model DietApp.Entities.DiyetisyenProfile
 
 
 <!DOCTYPE html>
@@ -100,6 +102,14 @@
 
         <hr class="my-5">
     </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a href="/Chat/Chat?selectedUserId=@Model.User.Id" class="btn btn-primary mt-3">Chatleş</a>
+    }
+    else
+    {
+        <a href="/Login/Login" class="btn btn-primary mt-3">Chatleş</a>
+    }
 
     <div class="card border-0 mt-3">
         <div class="card-header pb-0">

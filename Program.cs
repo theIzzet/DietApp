@@ -1,4 +1,6 @@
 using DietApp.Data;
+using DietApp.Hubs;
+using DietApp.MessageSection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +25,10 @@ builder.Services.AddIdentity<DietUser, DietRole>()
     .AddEntityFrameworkStores<IdentityContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddSignalR();
 
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -59,6 +64,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHub<ChatHub>("/chatHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
