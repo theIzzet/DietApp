@@ -55,12 +55,21 @@
                                 <i class="bi bi-house-fill me-1"></i>Anasayfa
                             </a>
                         </li>
-                      
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="PatientInfo" asp-action="PatientInfos">
-                                <i class="bi bi-box-arrow-in-right me-1"></i>PatientInfo
+                            <a class="nav-link" asp-controller="PatientInfo" asp-action="PatientInfos">
+                                <i class="bi bi-file-earmark-plus me-1"></i>Bilgi Giriş
                             </a>
                         </li>
+                        <!-- Yeni Eklenen Hasta Bilgilerim Butonu -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="PatientInfo" asp-action="PatientInfoDetails">
+                                <i class="bi bi-info-circle-fill me-1"></i>Bilgilerim
+                            </a>
+                        </li>
+
+
+
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Hasta" asp-action="DietList">Diyet Listem</a>
                         </li>
