@@ -18,17 +18,54 @@
         padding: 15px;
         border-bottom: 1px solid #ddd;
         font-size: 16px;
+        margin-bottom: 20px;
     }
 
     .diet-title {
         font-size: 20px;
         font-weight: bold;
         color: #2E7D32;
+        margin-bottom: 10px;
     }
 
     .diet-date {
         font-size: 14px;
         color: #666;
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background: #4CAF50;
+        color: white;
+    }
+
+    .day-cell {
+        font-weight: bold;
+        background: #f1f1f1;
+        width: 150px;
+    }
+
+    .meals-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .meal-item {
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
     }
 
     .back-btn {
@@ -44,9 +81,9 @@
         transition: 0.3s;
     }
 
-        .back-btn:hover {
-            background: #e68900;
-        }
+    .back-btn:hover {
+        background: #e68900;
+    }
 </style>
 
 <div class="diet-container">
@@ -57,8 +94,60 @@
         @foreach (var diet in Model)
         {
             <div class="diet-card">
-                <div class="diet-title">📝 @diet.Description</div>
+                <div class="diet-title">📝 Diyet Listesi</div>
                 <div class="diet-date">📅 Oluşturulma Tarihi: @diet.CreatedAt.ToString("dd MMM yyyy")</div>
+
+                @{
+                    var dietPlan = new Dictionary<string, List<(string Type, string Meal)>>();
+
+                    if (!string.IsNullOrEmpty(diet.Description))
+                    {
+                        try
+                        {
+                            dietPlan = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, string>>>>(diet.Description)
+                                .ToDictionary(
+                                    day => day.Key,
+                                    meals => meals.Value.Select(meal => (meal["type"], meal["meal"])).ToList()
+                                );
+                        }
+                        catch (Exception ex)
+                        {
+                            <p style="color:red;">Diyet verisi yüklenirken hata oluştu: @ex.Message</p>
+                        }
+                    }
+                }
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Gün</th>
+                            <th>Öğünler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var day in new[] { "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar" })
+                        {
+                            <tr>
+                                <td class="day-cell">@day</td>
+                                <td>
+                                    <ul class="meals-list">
+                                        @if (dietPlan.ContainsKey(day) && dietPlan[day].Any())
+                                        {
+                                            foreach (var meal in dietPlan[day])
+                                            {
+                                                <li class="meal-item"><strong>@meal.Type:</strong> @meal.Meal</li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="meal-item">Öğün eklenmemiş</li>
+                                        }
+                                    </ul>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         }
     }

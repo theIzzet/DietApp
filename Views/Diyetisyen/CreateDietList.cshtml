@@ -14,16 +14,50 @@
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-        .diet-form h2 {
-            color: #2E7D32;
-        }
+    .diet-form h2 {
+        color: #2E7D32;
+        text-align: center;
+    }
+
+    .diet-day {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f9f9f9;
+    }
+
+    .diet-day h3 {
+        color: #388E3C;
+        margin-bottom: 10px;
+    }
+
+    .meal-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
 
     .diet-input {
-        width: 100%;
-        padding: 10px;
+        flex: 1;
+        padding: 8px;
         border: 1px solid #ddd;
         border-radius: 5px;
-        margin-bottom: 15px;
+    }
+
+    .add-btn,
+    .remove-btn {
+        background: #4CAF50;
+        color: white;
+        padding: 6px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .remove-btn {
+        background: #D32F2F;
     }
 
     .submit-btn {
@@ -34,18 +68,84 @@
         text-decoration: none;
         font-weight: bold;
         transition: 0.3s;
+        display: block;
+        width: 100%;
+        text-align: center;
     }
 
-        .submit-btn:hover {
-            background: #2E7D32;
-        }
+    .submit-btn:hover {
+        background: #2E7D32;
+    }
 </style>
 
 <div class="diet-form">
     <h2>📋 Yeni Diyet Listesi</h2>
-    <form asp-action="CreateDietList" method="post">
+    <form asp-action="CreateDietList" method="post" onsubmit="generateDietDescription()">
         <input type="hidden" asp-for="PersonalInfoId" />
-        <textarea asp-for="Description" class="diet-input" placeholder="Diyet listesini girin..." rows="5"></textarea>
+        <div id="diet-container">
+            @foreach (var day in new[] { "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar" })
+            {
+                <div class="diet-day" id="@day">
+                    <h3>@day</h3>
+                    <div class="meal-list"></div>
+                    <button type="button" class="add-btn" onclick="addMeal('@day', 'Ana Öğün')">+ Ana Öğün Ekle</button>
+                    <button type="button" class="add-btn" onclick="addMeal('@day', 'Ara Öğün')">+ Ara Öğün Ekle</button>
+                </div>
+            }
+        </div>
+        <textarea asp-for="Description" id="Description" class="diet-input" hidden></textarea>
         <button type="submit" class="submit-btn">Kaydet</button>
     </form>
 </div>
+
+<script>
+    function addMeal(day, mealType) {
+        let dayContainer = document.getElementById(day).querySelector('.meal-list');
+        let mealContainer = document.createElement("div");
+        mealContainer.classList.add("meal-container");
+
+        let mealInput = document.createElement("input");
+        mealInput.type = "text";
+        mealInput.placeholder = mealType + " ekleyin...";
+        mealInput.classList.add("diet-input");
+
+        let hiddenTypeInput = document.createElement("input");
+        hiddenTypeInput.type = "hidden";
+        hiddenTypeInput.value = mealType;
+
+        let removeButton = document.createElement("button");
+        removeButton.innerText = "❌";
+        removeButton.classList.add("remove-btn");
+        removeButton.onclick = function () {
+            mealContainer.remove();
+        };
+
+        mealContainer.appendChild(hiddenTypeInput);
+        mealContainer.appendChild(mealInput);
+        mealContainer.appendChild(removeButton);
+        dayContainer.appendChild(mealContainer);
+    }
+
+    function generateDietDescription() {
+        let dietPlan = {};
+        let days = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
+
+        days.forEach(day => {
+            let meals = [];
+            let mealContainers = document.getElementById(day).querySelectorAll(".meal-container");
+
+            mealContainers.forEach(container => {
+                let mealType = container.querySelector("input[type='hidden']").value;
+                let mealName = container.querySelector("input[type='text']").value.trim();
+
+                if (mealName !== "") {
+                    meals.push({ type: mealType, meal: mealName });
+                }
+            });
+
+            dietPlan[day] = meals;
+        });
+
+        document.getElementById("Description").value = JSON.stringify(dietPlan, null, 2);
+    }
+</script>
