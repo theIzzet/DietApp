@@ -1,0 +1,751 @@
+﻿@{
+    Layout = "~/Views/Shared/_HastaLayout.cshtml";
+}
+@model PatientInfoViewModel
+
+<div class="container mt-4">
+    <h1 class="mb-4 text-center text-primary">Hasta Bilgilerim</h1>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-info text-center">Henüz bilgi girilmemiş</div>
+    }
+    else
+    {
+        <!-- Kişisel Bilgiler -->
+        <!-- Kişisel Bilgiler -->
+        <div class="card mb-4 shadow-sm animate__animated animate__fadeIn">
+            <div class="card-header bg-gradient-primary text-white d-flex justify-content-between">
+                <h3 class="card-title"><i class="fas fa-user-circle me-2"></i>Kişisel Bilgiler</h3>
+                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonalInfoModal">Düzenle</button>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Adı:</dt>
+                    <dd class="col-sm-9" id="displayName">@Model.Name</dd>
+
+                    <dt class="col-sm-3">Soyadı:</dt>
+                    <dd class="col-sm-9" id="displaySurname">@Model.SurName</dd>
+
+                    <dt class="col-sm-3">Doğum Tarihi:</dt>
+                    <dd class="col-sm-9">@Model.DateOfBirth?.ToString("d")</dd>
+
+                    <dt class="col-sm-3">Cinsiyet:</dt>
+                    <dd class="col-sm-9">@Model.Gender</dd>
+
+                    <dt class="col-sm-3">Boy:</dt>
+                    <dd class="col-sm-9">@Model.Height</dd>
+
+                    <dt class="col-sm-3">Ağırlık:</dt>
+                    <dd class="col-sm-9">@Model.Weight</dd>
+
+                    <dt class="col-sm-3">İletişim Bilgileri:</dt>
+                    <dd class="col-sm-9">@Model.ContactInformation</dd>
+
+                    <dt class="col-sm-3">Meslek:</dt>
+                    <dd class="col-sm-9">@Model.Occupation</dd>
+
+                    <dt class="col-sm-3">Medeni Durum:</dt>
+                    <dd class="col-sm-9">@Model.MaritalStatus</dd>
+
+                    <dt class="col-sm-3">Çocuk Sayısı:</dt>
+                    <dd class="col-sm-9">@Model.NumberOfChildren</dd>
+                </dl>
+            </div>
+        </div>
+
+
+        <!-- Kişisel Bilgiler Düzenleme Modalı -->
+        <div class="modal fade" id="editPersonalInfoModal" tabindex="-1" aria-labelledby="editPersonalInfoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editPersonalInfoLabel">Kişisel Bilgileri Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editPersonalInfoForm">
+                            <div class="mb-3">
+                                <label for="nameInput" class="form-label">Adı</label>
+                                <input type="text" class="form-control" id="nameInput" value="@Model.Name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="surnameInput" class="form-label">Soyadı</label>
+                                <input type="text" class="form-control" id="surnameInput" value="@Model.SurName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="dobInput" class="form-label">Doğum Tarihi</label>
+                                <input type="date" class="form-control" id="dobInput" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="mb-3">
+                                <label for="genderInput" class="form-label">Cinsiyet</label>
+                                <input type="text" class="form-control" id="genderInput" value="@Model.Gender">
+                            </div>
+                            <div class="mb-3">
+                                <label for="heightInput" class="form-label">Boy</label>
+                                <input type="number" class="form-control" id="heightInput" value="@Model.Height">
+                            </div>
+                            <div class="mb-3">
+                                <label for="weightInput" class="form-label">Ağırlık</label>
+                                <input type="number" class="form-control" id="weightInput" value="@Model.Weight">
+                            </div>
+                            <div class="mb-3">
+                                <label for="contactInput" class="form-label">İletişim Bilgileri</label>
+                                <input type="text" class="form-control" id="contactInput" value="@Model.ContactInformation">
+                            </div>
+                            <div class="mb-3">
+                                <label for="occupationInput" class="form-label">Meslek</label>
+                                <input type="text" class="form-control" id="occupationInput" value="@Model.Occupation">
+                            </div>
+                            <div class="mb-3">
+                                <label for="maritalStatusInput" class="form-label">Medeni Durum</label>
+                                <input type="text" class="form-control" id="maritalStatusInput" value="@Model.MaritalStatus">
+                            </div>
+                            <div class="mb-3">
+                                <label for="childrenInput" class="form-label">Çocuk Sayısı</label>
+                                <input type="number" class="form-control" id="childrenInput" value="@Model.NumberOfChildren">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="updatePersonalInfo()">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fiziksel Aktivite -->
+        <div class="card mb-4 shadow-sm animate__animated animate__fadeIn">
+            <div class="card-header bg-gradient-info text-white d-flex justify-content-between">
+                <h3 class="card-title"><i class="fas fa-running me-2"></i>Fiziksel Aktivite</h3>
+                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editPhysicalActivityModal">Düzenle</button>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Düzenli Fiziksel Aktivite:</dt>
+                    <dd class="col-sm-9" id="displayRegularPhysicalActivity">@Model.RegularPhysicalActivity</dd>
+
+                    <dt class="col-sm-3">Günlük Hareketsizlik:</dt>
+                    <dd class="col-sm-9" id="displayDailyInactivity">@Model.DailyInactivity</dd>
+
+                    <dt class="col-sm-3">Uyku Düzeni:</dt>
+                    <dd class="col-sm-9" id="displaySleepPattern">@Model.SleepPattern</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Fiziksel Aktivite Düzenleme Modalı -->
+        <div class="modal fade" id="editPhysicalActivityModal" tabindex="-1" aria-labelledby="editPhysicalActivityLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editPhysicalActivityLabel">Fiziksel Aktivite Bilgilerini Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editPhysicalActivityForm">
+                            <div class="mb-3">
+                                <label for="regularPhysicalActivityInput" class="form-label">Düzenli Fiziksel Aktivite</label>
+                                <textarea class="form-control" id="regularPhysicalActivityInput" rows="3">@Model.RegularPhysicalActivity</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dailyInactivityInput" class="form-label">Günlük Hareketsizlik</label>
+                                <textarea class="form-control" id="dailyInactivityInput" rows="3">@Model.DailyInactivity</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sleepPatternInput" class="form-label">Uyku Düzeni</label>
+                                <textarea class="form-control" id="sleepPatternInput" rows="3">@Model.SleepPattern</textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="updatePhysicalActivity()">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Yaşam Tarzı -->
+        <div class="card mb-4 shadow-sm animate__animated animate__fadeIn">
+            <div class="card-header bg-gradient-success text-white d-flex justify-content-between">
+                <h3 class="card-title"><i class="fas fa-heartbeat me-2"></i>Yaşam Tarzı</h3>
+                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editLifestyleModal">Düzenle</button>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Stres Seviyesi:</dt>
+                    <dd class="col-sm-9" id="displayStressLevel">@Model.StressLevel</dd>
+
+                    <dt class="col-sm-3">Sigara Kullanımı:</dt>
+                    <dd class="col-sm-9" id="displayNumberOfSmokingPackage">@Model.NumberOfSmokingPackage</dd>
+
+                    <dt class="col-sm-3">Sigara Kullanım Yılı:</dt>
+                    <dd class="col-sm-9" id="displaySmokingUtilezeYear">@Model.SmokingUtilezeYear</dd>
+
+                    <dt class="col-sm-3">Alkol Tüketimi:</dt>
+                    <dd class="col-sm-9" id="displayAlcoholConsumption">@Model.AlcoholConsumption</dd>
+
+                    <dt class="col-sm-3">Kafein Tüketimi:</dt>
+                    <dd class="col-sm-9" id="displayCaffeineIntake">@Model.CaffeineIntake</dd>
+
+                    <dt class="col-sm-3">Motivasyon Seviyesi:</dt>
+                    <dd class="col-sm-9" id="displayMotivationLevel">@Model.MotivationLevel</dd>
+
+                    <dt class="col-sm-3">Sosyal Destek:</dt>
+                    <dd class="col-sm-9" id="displaySocialSupport">@Model.SocialSupport</dd>
+
+                   
+                </dl>
+            </div>
+        </div>
+
+        <!-- Yaşam Tarzı Düzenleme Modalı -->
+        <div class="modal fade" id="editLifestyleModal" tabindex="-1" aria-labelledby="editLifestyleLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editLifestyleLabel">Yaşam Tarzı Bilgilerini Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editLifestyleForm">
+                            <div class="mb-3">
+                                <label for="stressLevelInput" class="form-label">Stres Seviyesi</label>
+                                <input type="text" class="form-control" id="stressLevelInput" value="@Model.StressLevel">
+                            </div>
+                            <div class="mb-3">
+                                <label for="numberOfSmokingPackageInput" class="form-label">Sigara Kullanımı</label>
+                                <input type="text" class="form-control" id="numberOfSmokingPackageInput" value="@Model.NumberOfSmokingPackage">
+                            </div>
+                            <div class="mb-3">
+                                <label for="smokingUtilezeYearInput" class="form-label">Sigara Kullanım Yılı</label>
+                                <input type="number" class="form-control" id="smokingUtilezeYearInput" value="@Model.SmokingUtilezeYear">
+                            </div>
+                            <div class="mb-3">
+                                <label for="alcoholConsumptionInput" class="form-label">Alkol Tüketimi</label>
+                                <input type="text" class="form-control" id="alcoholConsumptionInput" value="@Model.AlcoholConsumption">
+                            </div>
+                            <div class="mb-3">
+                                <label for="caffeineIntakeInput" class="form-label">Kafein Tüketimi</label>
+                                <input type="text" class="form-control" id="caffeineIntakeInput" value="@Model.CaffeineIntake">
+                            </div>
+                            <div class="mb-3">
+                                <label for="motivationLevelInput" class="form-label">Motivasyon Seviyesi</label>
+                                <input type="text" class="form-control" id="motivationLevelInput" value="@Model.MotivationLevel">
+                            </div>
+                            <div class="mb-3">
+                                <label for="socialSupportInput" class="form-label">Sosyal Destek</label>
+                                <input type="text" class="form-control" id="socialSupportInput" value="@Model.SocialSupport">
+                            </div>
+                           
+                            <button type="button" class="btn btn-primary" onclick="updateLifestyle()">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yeme Alışkanlıkları -->
+        <!-- Yeme Alışkanlıkları -->
+        <div class="card mb-4 shadow-sm animate__animated animate__fadeIn">
+            <div class="card-header bg-gradient-primary text-white d-flex justify-content-between">
+                <h3 class="card-title"><i class="fas fa-utensils me-2"></i>Yeme Alışkanlıkları</h3>
+                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editEatingHabitsModal">Düzenle</button>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Öğün Saatleri:</dt>
+                    <dd class="col-sm-9" id="displayMealTimes">@Model.MealTimes</dd>
+
+                    <dt class="col-sm-3">Tüketilen Gıdalar:</dt>
+                    <dd class="col-sm-9" id="displayConsumedFoods">@Model.ConsumedFoods</dd>
+
+                    <dt class="col-sm-3">Atıştırma Alışkanlıkları:</dt>
+                    <dd class="col-sm-9" id="displaySnackingHabits">@Model.SnackingHabits</dd>
+
+                    <dt class="col-sm-3">Dışarıda Yeme Sıklığı:</dt>
+                    <dd class="col-sm-9" id="displayEatingOutHabits">@Model.EatingOutHabits</dd>
+
+                    <dt class="col-sm-3">Yemek Yeme Süresi:</dt>
+                    <dd class="col-sm-9" id="displayEatingDuration">@Model.EatingDuration</dd>
+
+                    <dt class="col-sm-3">Tatlı Tüketimi:</dt>
+                    <dd class="col-sm-9" id="displayDessertConsumption">@Model.DessertConsumption</dd>
+
+                    <dt class="col-sm-3">Pişirme Yöntemleri:</dt>
+                    <dd class="col-sm-9" id="displayCookingMethod">@Model.CookingMethod</dd>
+
+                    <dt class="col-sm-3">Su Tüketimi:</dt>
+                    <dd class="col-sm-9" id="displayWaterConsumption">@Model.WaterConsumption</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Yeme Alışkanlıkları Düzenleme Modalı -->
+        <div class="modal fade" id="editEatingHabitsModal" tabindex="-1" aria-labelledby="editEatingHabitsLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editEatingHabitsLabel">Yeme Alışkanlıklarını Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editEatingHabitsForm">
+                            <div class="mb-3">
+                                <label for="mealTimesInput" class="form-label">Öğün Saatleri</label>
+                                <input type="text" class="form-control" id="mealTimesInput" value="@Model.MealTimes">
+                            </div>
+                            <div class="mb-3">
+                                <label for="consumedFoodsInput" class="form-label">Tüketilen Gıdalar</label>
+                                <textarea class="form-control" id="consumedFoodsInput" rows="3">@Model.ConsumedFoods</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="snackingHabitsInput" class="form-label">Atıştırma Alışkanlıkları</label>
+                                <input type="text" class="form-control" id="snackingHabitsInput" value="@Model.SnackingHabits">
+                            </div>
+                            <div class="mb-3">
+                                <label for="eatingOutHabitsInput" class="form-label">Dışarıda Yeme Sıklığı</label>
+                                <input type="text" class="form-control" id="eatingOutHabitsInput" value="@Model.EatingOutHabits">
+                            </div>
+                            <div class="mb-3">
+                                <label for="eatingDurationInput" class="form-label">Yemek Yeme Süresi</label>
+                                <input type="text" class="form-control" id="eatingDurationInput" value="@Model.EatingDuration">
+                            </div>
+                            <div class="mb-3">
+                                <label for="dessertConsumptionInput" class="form-label">Tatlı Tüketimi</label>
+                                <input type="text" class="form-control" id="dessertConsumptionInput" value="@Model.DessertConsumption">
+                            </div>
+                            <div class="mb-3">
+                                <label for="cookingMethodInput" class="form-label">Pişirme Yöntemleri</label>
+                                <input type="text" class="form-control" id="cookingMethodInput" value="@Model.CookingMethod">
+                            </div>
+                            <div class="mb-3">
+                                <label for="waterConsumptionInput" class="form-label">Su Tüketimi</label>
+                                <input type="text" class="form-control" id="waterConsumptionInput" value="@Model.WaterConsumption">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="updateEatingHabits()">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hedefler -->
+        <!-- Hedefler -->
+        <div class="card mb-4 shadow-sm animate__animated animate__fadeIn">
+            <div class="card-header bg-gradient-danger text-white d-flex justify-content-between">
+                <h3 class="card-title"><i class="fas fa-bullseye me-2"></i>Hedefler</h3>
+                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editGoalsModal">Düzenle</button>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Kilo Hedefi:</dt>
+                    <dd class="col-sm-9" id="displayWeightGoal">@Model.WeightGoal</dd>
+                    <dt class="col-sm-3">Sağlık Sorunları Yönetimi:</dt>
+                    <dd class="col-sm-9" id="displayHealthIssuesManagement">@Model.HealthIssuesManagement</dd>
+                    <dt class="col-sm-3">Spor Performans Hedefleri:</dt>
+                    <dd class="col-sm-9" id="displaySportsPerformanceGoals">@Model.SportsPerformanceGoals</dd>
+                    <dt class="col-sm-3">Diğer Hedefler:</dt>
+                    <dd class="col-sm-9" id="displayOtherGoals">@Model.OtherGoals</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Hedefler Düzenleme Modalı -->
+        <div class="modal fade" id="editGoalsModal" tabindex="-1" aria-labelledby="editGoalsLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editGoalsLabel">Hedeflerinizi Düzenleyin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editGoalsForm">
+                            <div class="mb-3">
+                                <label for="weightGoalInput" class="form-label">Kilo Hedefi</label>
+                                <input type="text" class="form-control" id="weightGoalInput" value="@Model.WeightGoal">
+                            </div>
+                            <div class="mb-3">
+                                <label for="healthIssuesManagementInput" class="form-label">Sağlık Sorunları Yönetimi</label>
+                                <textarea class="form-control" id="healthIssuesManagementInput" rows="3">@Model.HealthIssuesManagement</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sportsPerformanceGoalsInput" class="form-label">Spor Performans Hedefleri</label>
+                                <textarea class="form-control" id="sportsPerformanceGoalsInput" rows="3">@Model.SportsPerformanceGoals</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="otherGoalsInput" class="form-label">Diğer Hedefler</label>
+                                <textarea class="form-control" id="otherGoalsInput" rows="3">@Model.OtherGoals</textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="updateGoals()">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+       
+        <!-- Tıbbi Geçmiş -->
+        <div class="card mb-4 shadow-sm animate__animated animate__fadeIn">
+            <div class="card-header bg-gradient-secondary text-white d-flex justify-content-between">
+                <h3 class="card-title"><i class="fas fa-file-medical me-2"></i>Tıbbi Geçmiş</h3>
+                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editMedicalHistoryModal">Düzenle</button>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Alerjiler:</dt>
+                    <dd class="col-sm-9" id="displayAllergyName">@Model.AllergyName</dd>
+                    <dt class="col-sm-3">Hastalıklar:</dt>
+                    <dd class="col-sm-9" id="displayDiseaseNameD">@Model.DiseaseName</dd>
+                    <dt class="col-sm-3">Aile Hastalıkları:</dt>
+                    <dd class="col-sm-9" id="displayDiseaseNameF">@Model.FamilyDiseaseName</dd>
+                    <dt class="col-sm-3">Kullanılan İlaçlar:</dt>
+                    <dd class="col-sm-9" id="displayMedicationName">@Model.MedicationName</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Tıbbi Geçmiş Düzenleme Modalı -->
+        <div class="modal fade" id="editMedicalHistoryModal" tabindex="-1" aria-labelledby="editMedicalHistoryLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editMedicalHistoryLabel">Tıbbi Geçmişi Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editMedicalHistoryForm">
+                            <div class="mb-3">
+                                <label for="allergyNameInput" class="form-label">Alerjiler</label>
+                                <textarea class="form-control" id="allergyNameInput" rows="2">@Model.AllergyName</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="diseaseNameDInput" class="form-label">Hastalıklar</label>
+                                <textarea class="form-control" id="diseaseNameDInput" rows="2">@Model.DiseaseName</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="diseaseNameFInput" class="form-label">Aile Hastalıkları</label>
+                                <textarea class="form-control" id="diseaseNameFInput" rows="2">@Model.FamilyDiseaseName</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="medicationNameInput" class="form-label">Kullanılan İlaçlar</label>
+                                <textarea class="form-control" id="medicationNameInput" rows="2">@Model.MedicationName</textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="updateMedicalHistory()">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+
+    }
+</div>
+
+<!-- Animasyon ve İkonlar için CSS ve JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, #007bff, #00bcd4);
+    }
+
+    .bg-gradient-info {
+        background: linear-gradient(45deg, #17a2b8, #00bcd4);
+    }
+
+    .bg-gradient-success {
+        background: linear-gradient(45deg, #28a745, #00bcd4);
+    }
+
+    .bg-gradient-warning {
+        background: linear-gradient(45deg, #ffc107, #ff9800);
+    }
+
+    .bg-gradient-danger {
+        background: linear-gradient(45deg, #dc3545, #ff5722);
+    }
+
+    .bg-gradient-secondary {
+        background: linear-gradient(45deg, #6c757d, #9e9e9e);
+    }
+
+    .card {
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+</style>
+
+
+<script>
+    function updatePersonalInfo() {
+        let updatedData = {
+            Name: document.getElementById("nameInput").value,
+            SurName: document.getElementById("surnameInput").value,
+            DateOfBirth: document.getElementById("dobInput").value,
+            Gender: document.getElementById("genderInput").value,
+            Height: document.getElementById("heightInput").value,
+            Weight: document.getElementById("weightInput").value,
+            ContactInformation: document.getElementById("contactInput").value,
+            Occupation: document.getElementById("occupationInput").value,
+            MaritalStatus: document.getElementById("maritalStatusInput").value,
+            NumberOfChildren: document.getElementById("childrenInput").value
+        };
+
+        fetch('/PatientInfo/UpdatePersonalInfo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update all displayed fields on the card
+                document.getElementById("displayName").innerText = updatedData.Name;
+                document.getElementById("displaySurname").innerText = updatedData.SurName;
+                document.getElementById("displayDateOfBirth").innerText = new Date(updatedData.DateOfBirth).toLocaleDateString();
+                document.getElementById("displayGender").innerText = updatedData.Gender;
+                document.getElementById("displayHeight").innerText = updatedData.Height;
+                document.getElementById("displayWeight").innerText = updatedData.Weight;
+                document.getElementById("displayContactInformation").innerText = updatedData.ContactInformation;
+                document.getElementById("displayOccupation").innerText = updatedData.Occupation;
+                document.getElementById("displayMaritalStatus").innerText = updatedData.MaritalStatus;
+                document.getElementById("displayNumberOfChildren").innerText = updatedData.NumberOfChildren;
+
+                alert("Kişisel bilgiler güncellendi!");
+            } else {
+                alert("Güncelleme başarısız.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        // Modalı kapat
+        var modal = bootstrap.Modal.getInstance(document.getElementById('editPersonalInfoModal'));
+        modal.hide();
+    }
+</script>
+
+
+
+<script>
+    function updatePhysicalActivity() {
+        let updatedData = {
+            RegularPhysicalActivity: document.getElementById("regularPhysicalActivityInput").value,
+            DailyInactivity: document.getElementById("dailyInactivityInput").value,
+            SleepPattern: document.getElementById("sleepPatternInput").value
+        };
+
+        fetch('/PatientInfo/UpdatePhysicalActivity', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update all displayed fields on the card
+                document.getElementById("displayRegularPhysicalActivity").innerText = updatedData.RegularPhysicalActivity;
+                document.getElementById("displayDailyInactivity").innerText = updatedData.DailyInactivity;
+                document.getElementById("displaySleepPattern").innerText = updatedData.SleepPattern;
+
+                alert("Fiziksel aktivite bilgileri güncellendi!");
+            } else {
+                alert("Güncelleme başarısız.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        // Modalı kapat
+        var modal = bootstrap.Modal.getInstance(document.getElementById('editPhysicalActivityModal'));
+        modal.hide();
+    }
+</script>
+
+
+
+<script>
+    function updateLifestyle() {
+        let updatedData = {
+            StressLevel: document.getElementById("stressLevelInput").value,
+            NumberOfSmokingPackage: document.getElementById("numberOfSmokingPackageInput").value,
+            SmokingUtilezeYear: document.getElementById("smokingUtilezeYearInput").value,
+            AlcoholConsumption: document.getElementById("alcoholConsumptionInput").value,
+            CaffeineIntake: document.getElementById("caffeineIntakeInput").value,
+            MotivationLevel: document.getElementById("motivationLevelInput").value,
+            SocialSupport: document.getElementById("socialSupportInput").value,
+        };
+
+        fetch('/PatientInfo/UpdateLifestyle', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update all displayed fields on the card
+                document.getElementById("displayStressLevel").innerText = updatedData.StressLevel;
+                document.getElementById("displayNumberOfSmokingPackage").innerText = updatedData.NumberOfSmokingPackage;
+                document.getElementById("displaySmokingUtilezeYear").innerText = updatedData.SmokingUtilezeYear;
+                document.getElementById("displayAlcoholConsumption").innerText = updatedData.AlcoholConsumption;
+                document.getElementById("displayCaffeineIntake").innerText = updatedData.CaffeineIntake;
+                document.getElementById("displayMotivationLevel").innerText = updatedData.MotivationLevel;
+                document.getElementById("displaySocialSupport").innerText = updatedData.SocialSupport;
+
+                alert("Yaşam tarzı bilgileri güncellendi!");
+            } else {
+                alert("Güncelleme başarısız.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        // Modalı kapat
+        var modal = bootstrap.Modal.getInstance(document.getElementById('editLifestyleModal'));
+        modal.hide();
+    }
+</script>
+
+
+
+<script>
+    function updateEatingHabits() {
+        let updatedData = {
+            MealTimes: document.getElementById("mealTimesInput").value,
+            ConsumedFoods: document.getElementById("consumedFoodsInput").value,
+            SnackingHabits: document.getElementById("snackingHabitsInput").value,
+            EatingOutHabits: document.getElementById("eatingOutHabitsInput").value,
+            EatingDuration: document.getElementById("eatingDurationInput").value,
+            DessertConsumption: document.getElementById("dessertConsumptionInput").value,
+            CookingMethod: document.getElementById("cookingMethodInput").value,
+            WaterConsumption: document.getElementById("waterConsumptionInput").value
+        };
+
+        fetch('/PatientInfo/UpdateEatingHabits', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update all displayed fields
+                document.getElementById("displayMealTimes").innerText = updatedData.MealTimes;
+                document.getElementById("displayConsumedFoods").innerText = updatedData.ConsumedFoods;
+                document.getElementById("displaySnackingHabits").innerText = updatedData.SnackingHabits;
+                document.getElementById("displayEatingOutHabits").innerText = updatedData.EatingOutHabits;
+                document.getElementById("displayEatingDuration").innerText = updatedData.EatingDuration;
+                document.getElementById("displayDessertConsumption").innerText = updatedData.DessertConsumption;
+                document.getElementById("displayCookingMethod").innerText = updatedData.CookingMethod;
+                document.getElementById("displayWaterConsumption").innerText = updatedData.WaterConsumption;
+
+                alert("Yeme alışkanlıkları güncellendi!");
+            } else {
+                alert("Güncelleme başarısız.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Güncelleme sırasında bir hata oluştu.");
+        });
+
+        // Modalı kapat
+        var modal = bootstrap.Modal.getInstance(document.getElementById('editEatingHabitsModal'));
+        modal.hide();
+    }
+</script>
+
+
+
+<script>
+    function updateGoals() {
+        let updatedData = {
+            WeightGoal: document.getElementById("weightGoalInput").value,
+            HealthIssuesManagement: document.getElementById("healthIssuesManagementInput").value,
+            SportsPerformanceGoals: document.getElementById("sportsPerformanceGoalsInput").value,
+            OtherGoals: document.getElementById("otherGoalsInput").value
+        };
+
+        fetch('/PatientInfo/UpdateGoals', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update all displayed fields
+                document.getElementById("displayWeightGoal").innerText = updatedData.WeightGoal;
+                document.getElementById("displayHealthIssuesManagement").innerText = updatedData.HealthIssuesManagement;
+                document.getElementById("displaySportsPerformanceGoals").innerText = updatedData.SportsPerformanceGoals;
+                document.getElementById("displayOtherGoals").innerText = updatedData.OtherGoals;
+
+                alert("Hedefleriniz başarıyla güncellendi!");
+            } else {
+                alert("Güncelleme başarısız: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Güncelleme sırasında bir hata oluştu.");
+        });
+
+        // Modalı kapat
+        var modal = bootstrap.Modal.getInstance(document.getElementById('editGoalsModal'));
+        modal.hide();
+    }
+</script>
+
+
+
+<script>
+    function updateMedicalHistory() {
+        let updatedData = {
+            AllergyName: document.getElementById("allergyNameInput").value,
+            DiseaseName: document.getElementById("diseaseNameDInput").value,
+            FamilyDiseaseName: document.getElementById("diseaseNameFInput").value,
+            MedicationName: document.getElementById("medicationNameInput").value
+        };
+
+        fetch('/PatientInfo/UpdateMedicalHistory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update all displayed fields
+                document.getElementById("displayAllergyName").innerText = updatedData.AllergyName;
+                document.getElementById("displayDiseaseNameD").innerText = updatedData.DiseaseName;
+                document.getElementById("displayDiseaseNameF").innerText = updatedData.FamilyDiseaseName;
+                document.getElementById("displayMedicationName").innerText = updatedData.MedicationName;
+
+                alert("Tıbbi geçmiş bilgileri güncellendi!");
+            } else {
+                alert("Güncelleme başarısız: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Güncelleme sırasında bir hata oluştu.");
+        });
+
+        // Modalı kapat
+        var modal = bootstrap.Modal.getInstance(document.getElementById('editMedicalHistoryModal'));
+        modal.hide();
+    }
+</script>

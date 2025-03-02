@@ -80,10 +80,10 @@ namespace DietApp.Models
 
 
         
-        public string? DiseaseNameD { get; set; }
+        public string? DiseaseName { get; set; }
 
        
-        public string? DiseaseNameF { get; set; }
+        public string? FamilyDiseaseName { get; set; }
 
         
         public string? AllergyName { get; set; }
@@ -97,7 +97,7 @@ namespace DietApp.Models
 
         public List<string>? DiseaseNameDs { get; set; } = new List<string>();
 
-        public List<string>? DiseaseNameFs { get; set; } = new List<string>();
+        public List<string>? FamilyDiseaseNames { get; set; } = new List<string>();
 
 
         public List<string>? MedicationNames { get; set; } = new List<string>();

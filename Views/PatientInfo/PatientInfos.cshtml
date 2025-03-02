@@ -190,17 +190,15 @@
             </div>
         </fieldset>
 
-        <!-- Yeme Alışkanlıkları Bölümü -->
-        <fieldset class="border p-3 mb-4">
-            <legend class="w-auto px-2">Yeme Alışkanlıkları</legend>
-            <div class="row">
+		<!-- Yeme Alışkanlıkları Bölümü -->
+		<fieldset class="border p-3 mb-4">
+			<legend class="w-auto px-2">Yeme Alışkanlıkları</legend>
+			<div class="row">
 				<div class="col-md-6 mb-3">
 					<label asp-for="MealTimes"></label>
 					<textarea asp-for="MealTimes" class="form-control"></textarea>
 					<span asp-validation-for="MealTimes" class="text-danger"></span>
 				</div>
-
-
 
 				<div class="col-md-6 mb-3">
 					<label asp-for="ConsumedFoods"></label>
@@ -214,36 +212,45 @@
 					<span asp-validation-for="SnackingHabits" class="text-danger"></span>
 				</div>
 
-
 				<div class="col-md-6 mb-3">
-					<label asp-for="EatingOutHabits"> Dışardan Yemek Yeme Alışkanlığı</label>
+					<label asp-for="EatingOutHabits">Dışardan Yemek Yeme Alışkanlığı</label>
 					<textarea asp-for="EatingOutHabits" class="form-control"></textarea>
 					<span asp-validation-for="EatingOutHabits" class="text-danger"></span>
 				</div>
 
-
 				<div class="col-md-6 mb-3">
-					<label asp-for="EatingDuration">Yemek Yeme Süresi </label>
+					<label asp-for="EatingDuration">Yemek Yeme Süresi</label>
 					<textarea asp-for="EatingDuration" class="form-control"></textarea>
 					<span asp-validation-for="EatingDuration" class="text-danger"></span>
 				</div>
 
-
 				<div class="col-md-6 mb-3">
-					<label asp-for="DessertConsumption">Tatlı Tüektimi </label>
+					<label asp-for="DessertConsumption">Tatlı Tüketimi</label>
 					<textarea asp-for="DessertConsumption" class="form-control"></textarea>
 					<span asp-validation-for="DessertConsumption" class="text-danger"></span>
 				</div>
 
-
-
 				<div class="col-md-6 mb-3">
-					<label asp-for="CookingMethod">yemek Pişirme Yöntemi </label>
+					<label asp-for="CookingMethod">Yemek Pişirme Yöntemi</label>
 					<textarea asp-for="CookingMethod" class="form-control"></textarea>
 					<span asp-validation-for="CookingMethod" class="text-danger"></span>
 				</div>
-            </div>
-        </fieldset>
+
+				<!-- Su Tüketimi Alanı -->
+				<div class="col-md-6 mb-3">
+					<label asp-for="WaterConsumption" class="form-label">Su Tüketimi</label>
+					<select asp-for="WaterConsumption" class="form-select">
+						<option value="">Günlük su tüketimini seçin</option>
+						<option value="Günlük 1 Litreden az">Günlük 1 Litreden az</option>
+						<option value="1-2 Litre arası">1-2 Litre arası</option>
+						<option value="2-3 Litre arası">2-3 Litre arası</option>
+						<option value="3 Litreden fazla">3 Litreden fazla</option>
+					</select>
+					<span asp-validation-for="WaterConsumption" class="text-danger"></span>
+				</div>
+			</div>
+		</fieldset>
+
 
 		@* 		Hedefler  *@ 
 		<fieldset>
@@ -288,16 +295,16 @@
 				</div>
 
 				<div class=" col-md-6 mb-3">
-					<label asp-for="DiseaseNameD">Bireysel Hastalık  </label>
-					<textarea asp-for="DiseaseNameD" class="form-control"></textarea>
-					<span asp-validation-for="DiseaseNameD" class="text-danger"></span>
+					<label asp-for="DiseaseName">Bireysel Hastalık  </label>
+					<textarea asp-for="DiseaseName" class="form-control"></textarea>
+					<span asp-validation-for="DiseaseName" class="text-danger"></span>
 				</div>
 
 
 				<div class=" col-md-6 mb-3">
-					<label asp-for="DiseaseNameF">Kalıtsal Hastalık  </label>
-					<textarea asp-for="DiseaseNameF" class="form-control"></textarea>
-					<span asp-validation-for="DiseaseNameF" class="text-danger"></span>
+					<label asp-for="FamilyDiseaseName">Kalıtsal Hastalık  </label>
+					<textarea asp-for="FamilyDiseaseName" class="form-control"></textarea>
+					<span asp-validation-for="FamilyDiseaseName" class="text-danger"></span>
 				</div>
 
 
