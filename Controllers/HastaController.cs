@@ -9,10 +9,17 @@ using Microsoft.AspNetCore.Identity;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
+using DietApp.Models;
 
 namespace DietApp.Controllers
 {
+   
+
     // Controller'dan miras alıyoruz
     public class HastaController : Controller
     {
@@ -168,38 +175,55 @@ namespace DietApp.Controllers
 
             return BadRequest("Geçersiz veri");
         }
-
-
-
+       
         [Authorize(Roles = "Hasta")]
         public async Task<IActionResult> DietList()
         {
-            var userId = _userManager.GetUserId(User);
-            if (string.IsNullOrEmpty(userId))
+            // Şu anki oturum açan kullanıcıyı al
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
             {
-                return Unauthorized("Kullanıcı oturum açmamış.");
+                // Kullanıcı yoksa ana sayfaya yönlendirilebilir
+                return RedirectToAction("Index", "Home");
             }
 
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
+            // Kişisel bilgi kaydını çek (kişiye ait PersonalInfo)
+            // Örnek: eğer PersonalInfo içinde 'DietUserId' gibi bir alan varsa
+            var personalInfo = await _dataContext.PersonalInfos
+                .FirstOrDefaultAsync(p => p.UserId == currentUser.Id);
+
+            if (personalInfo == null)
             {
-                return NotFound("Kullanıcı bulunamadı.");
+                return NotFound("Kullanıcıya ait kişisel bilgi bulunamadı.");
             }
 
-            // Fetching the diet list for the patient
-            var patient = await _dataContext.PersonalInfos.FirstOrDefaultAsync(p => p.UserId == userId);
-            if (patient == null)
-            {
-                return NotFound("Hasta bilgileri bulunamadı.");
-            }
-
+            // Hastaya ait diyet listesini çek (en son ekleneni alıyoruz)
             var dietList = await _dataContext.DietLists
-                                            .FirstOrDefaultAsync(d => d.PersonalInfoId == patient.Id);
+                .Where(d => d.PersonalInfoId == personalInfo.Id)
+                .OrderByDescending(d => d.CreatedAt)
+                .FirstOrDefaultAsync();
 
-           
+            if (dietList == null)
+            {
+                return NotFound("Diyet listesi bulunamadı.");
+            }
 
-            return View(dietList); 
+            // dietList.Description içindeki JSON'u çözümlüyoruz
+            // Mesela "Pazartesi" -> [{ type: "...", meal: "..." }, ... ]
+            // şeklinde bir sözlük (Dictionary) elde edeceğiz
+            Dictionary<string, List<MealVM>> model =
+                          JsonConvert.DeserializeObject<Dictionary<string, List<MealVM>>>(dietList.Description);
+            if (!string.IsNullOrWhiteSpace(dietList.Description))
+            {
+                model = JsonConvert.DeserializeObject<Dictionary<string, List<MealVM>>>(dietList.Description);
+            }
+
+            // View'a JSON'dan elde ettiğimiz Dictionary'i gönderiyoruz
+            return View(model);
         }
+
+
+
 
         // Diğer aksiyonlarınızın altında ekleyebilirsiniz.
         [Authorize(Roles = "Hasta")]

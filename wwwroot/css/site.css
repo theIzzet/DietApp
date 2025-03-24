@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -28,4 +28,78 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+
+/* Kart Tasarımı */
+.diet-card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+    .diet-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+/* Kart Başlığı */
+.card-header {
+    background: linear-gradient(45deg, #ff8c00, #ff4500);
+    font-weight: bold;
+    padding: 15px;
+    color: white;
+    text-align: center;
+}
+
+/* Buton Stili */
+.btn-lg {
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+    .btn-lg:hover {
+        background-color: #ff4500;
+        color: white;
+        transform: scale(1.05);
+    }
+
+/* Diyet İçeriği (Animasyon) */
+.diet-content {
+    animation: slideDown 0.5s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Öğün Listesi */
+.meal-item {
+    background: #f8f9fa;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Öğün Tipi ve Açıklama */
+.meal-type {
+    color: #ff4500;
+    font-weight: bold;
+}
+
+.meal-desc {
+    color: #333;
 }
