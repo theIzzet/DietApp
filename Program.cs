@@ -2,12 +2,16 @@ using DietApp.Data;
 using DietApp.Hubs;
 using DietApp.MessageSection;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())); // CSRF için. 
+
+
 
 // Get the connection string from appsettings.jsonn
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -36,6 +40,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Login/Login";
     options.SlidingExpiration=true;
     options.ExpireTimeSpan=TimeSpan.FromMinutes(5);
+
+
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // https için
 });
 
 
