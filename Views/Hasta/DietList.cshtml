@@ -1,35 +1,47 @@
-﻿@model DietApp.Entities.DietList
+﻿@using DietApp.Models
+
+@model Dictionary<string, List<MealVM>>
 
 @{
-    ViewData["Title"] = "Diyet Listem";
-    Layout = "~/Views/Shared/_HastaLayout.cshtml";
-
+    ViewData["Title"] = "Diyet Listesi";
 }
 
-<div class="container py-5">
-    <h2 class="text-center mb-4">@ViewData["Title"]</h2>
-    <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white text-center">
-            <h4><i class="bi bi-file-earmark-text me-2"></i>Diyet Listesi</h4>
-        </div>
-        <div class="card-body">
-            @if (Model == null)
-            {
-                <div class="alert alert-warning text-center">
-                    <i class="bi bi-exclamation-circle me-2"></i><strong>Henüz bir diyet listesi oluşturulmamış.</strong>
+<h2 class="text-center mb-4 text-primary">📅 Haftalık Diyet Listesi</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var day in Model.Keys)
+        {
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-lg diet-card">
+                    <div class="card-header bg-gradient text-white text-center">
+                        <h3 class="mb-0">@day</h3>
+                    </div>
+                    <div class="card-body text-center">
+                        <button class="btn btn-lg btn-outline-primary w-100" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapse-@day"
+                                aria-expanded="false"
+                                aria-controls="collapse-@day">
+                            📖 Diyeti Görüntüle
+                        </button>
+
+                        <div class="collapse mt-3 diet-content" id="collapse-@day">
+                            <div class="card card-body text-start">
+                                <ul class="list-unstyled">
+                                    @foreach (var meal in Model[day])
+                                    {
+                                        <li class="meal-item">
+                                            <span class="meal-type">@meal.Type:</span>
+                                            <span class="meal-desc">@meal.Meal</span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            }
-            else
-            {
-                <div class="mb-3">
-                    <label class="form-label"><strong>📝 Diyet Açıklaması:</strong></label>
-                    <textarea class="form-control" rows="8" readonly>@Model.Description</textarea>
-                </div>
-                <p class="text-muted text-end">
-                    <small><i class="bi bi-calendar-check me-2"></i>Oluşturulma Tarihi: @Model.CreatedAt.ToString("dd MMM yyyy HH:mm")</small>
-                </p>
-            }
-        </div>
+            </div>
+        }
     </div>
 </div>
-
