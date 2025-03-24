@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews(options =>
-options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())); // CSRF için. 
+options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())); // CSRF güvenliði için. 
 
 
 
