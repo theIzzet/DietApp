@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - DietApp</title>
     <script type="importmap"></script>
-
+    <head>
+        <!-- Diğer head içeriği -->
+        @await RenderSectionAsync("Styles", required: false)
+    </head>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- Bootstrap Icons (opsiyonel, ikonlar için) -->
